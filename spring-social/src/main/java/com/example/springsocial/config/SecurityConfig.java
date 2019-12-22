@@ -99,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/",
-                        "/error",
+                        "/error", "/test/getEmplyer",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",

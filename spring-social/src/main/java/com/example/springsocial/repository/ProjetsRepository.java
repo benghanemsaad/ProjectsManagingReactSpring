@@ -1,9 +1,9 @@
 package com.example.springsocial.repository;
 
-import com.example.springsocial.entity.Projets;
+import com.example.springsocial.model.Projets;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Iprojets extends JpaRepository<Projets, Long> {
+public interface ProjetsRepository extends JpaRepository<Projets, Long> {
 }

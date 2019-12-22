@@ -1,4 +1,4 @@
-package com.example.springsocial.entity;
+package com.example.springsocial.model;
 
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ public class Services {
     public String nomService;
 
     @OneToMany
-    public List<Employers> employers;
+    public List<Users> employers;
 
     public Services() {
     }
@@ -23,7 +23,7 @@ public class Services {
         this.nomService = nomService;
     }
 
-    public Services(String nomService, List<Employers> employers) {
+    public Services(String nomService, List<Users> employers) {
         this.nomService = nomService;
         this.employers = employers;
     }
@@ -44,35 +44,35 @@ public class Services {
         this.nomService = nomService;
     }
 
-    public List<Employers> getEmployers() {
+    public List<Users> getEmployers() {
         if (employers == null)
-            employers = new ArrayList<Employers>();
+            employers = new ArrayList<Users>();
         return employers;
     }
 
     public Iterator getIteratorEmployers() {
         if (employers == null)
-            employers = new ArrayList<Employers>();
+            employers = new ArrayList<Users>();
         return employers.iterator();
     }
 
-    public void setEmployers(List<Employers> newEmployers) {
+    public void setEmployers(List<Users> newEmployers) {
         removeAllEmployers();
         for (Iterator iter = newEmployers.iterator(); iter.hasNext(); )
-            addEmployers((Employers) iter.next());
+            addEmployers((Users) iter.next());
     }
 
-    public void addEmployers(Employers newEmployers) {
+    public void addEmployers(Users newEmployers) {
         if (newEmployers == null)
             return;
         if (this.employers == null)
-            this.employers = new ArrayList<Employers>();
+            this.employers = new ArrayList<Users>();
         if (!this.employers.contains(newEmployers)) {
             this.employers.add(newEmployers);
         }
     }
 
-    public void removeEmployers(Employers oldEmployers) {
+    public void removeEmployers(Users oldEmployers) {
         if (oldEmployers == null)
             return;
         if (this.employers != null)

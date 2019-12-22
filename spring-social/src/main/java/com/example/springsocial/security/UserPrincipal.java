@@ -1,6 +1,6 @@
 package com.example.springsocial.security;
 
-import com.example.springsocial.model.User;
+import com.example.springsocial.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,20 +25,20 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserPrincipal create(User user) {
+    public static UserPrincipal create(Users users) {
         List<GrantedAuthority> authorities = Collections.
                 singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new UserPrincipal(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
+                users.getIdEmp(),
+                users.getEmail(),
+                users.getPassword(),
                 authorities
         );
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        UserPrincipal userPrincipal = UserPrincipal.create(user);
+    public static UserPrincipal create(Users users, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = UserPrincipal.create(users);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
     }

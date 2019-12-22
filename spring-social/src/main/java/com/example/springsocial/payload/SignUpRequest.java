@@ -3,13 +3,13 @@ package com.example.springsocial.payload;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
 
 public class SignUpRequest {
     @NotBlank
     private String name;
+
+    @NotBlank
+    private String surname;
 
     @NotBlank
     @Email
@@ -24,6 +24,14 @@ public class SignUpRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {

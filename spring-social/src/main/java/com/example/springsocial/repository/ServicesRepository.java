@@ -1,10 +1,9 @@
 package com.example.springsocial.repository;
 
-import com.example.springsocial.entity.Employers;
+import com.example.springsocial.model.Services;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Iemployers extends JpaRepository<Employers, Long> {
-
+public interface ServicesRepository extends JpaRepository<Services, Long> {
 }

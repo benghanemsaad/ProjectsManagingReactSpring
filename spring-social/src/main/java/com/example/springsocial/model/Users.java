@@ -1,40 +1,62 @@
-package com.example.springsocial.entity;
+package com.example.springsocial.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 
 @Entity
-@Table(name = "Employers")
-public class Employers {
+@Table(name = "Users")
+public class Users {
     @Id
-    @GeneratedValue //(strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     public Long idEmp;
+
 
     public String matricule;
 
-    public String nom;
+    @Column(nullable = false)
+    private String nom;
 
-    public String prenom;
+    @Column(nullable = false)
+    private String prenom;
+
+    @Email
+    @Column(nullable = false)
+    private String email;
+
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
+
+    @JsonIgnore
+    private String password;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
 
     public String tel;
 
-    public String email;
-
     public String adresse;
 
-    public String password;
-
+   // @Column(nullable = false)
     public String role;
+
+    private String providerId;
 
     @OneToMany
     public List<Projets> projets;
 
-    public Employers() {
+    public Users() {
     }
 
-
-    public Employers(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role) {
+    public Users(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role) {
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
@@ -45,7 +67,7 @@ public class Employers {
         this.role = role;
     }
 
-    public Employers(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role, List<Projets> projets) {
+    public Users(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role, List<Projets> projets) {
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
@@ -55,6 +77,14 @@ public class Employers {
         this.password = password;
         this.role = role;
         this.projets = projets;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
     }
 
     public Long getIdEmp() {
@@ -113,20 +143,44 @@ public class Employers {
         this.adresse = adresse;
     }
 
-    public String getpassword() {
-        return password;
-    }
-
-    public void setpassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
     }
 
     public List<Projets> getProjets() {

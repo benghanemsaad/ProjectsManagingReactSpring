@@ -1,4 +1,4 @@
-package com.example.springsocial.entity;
+package com.example.springsocial.model;
 
 import com.sun.javafx.beans.IDProperty;
 

@@ -1,14 +1,12 @@
 package com.example.springsocial.controller;
 
-import com.example.springsocial.entity.Employers;
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
-import com.example.springsocial.model.User;
+import com.example.springsocial.model.Users;
 import com.example.springsocial.payload.ApiResponse;
 import com.example.springsocial.payload.AuthResponse;
 import com.example.springsocial.payload.LoginRequest;
 import com.example.springsocial.payload.SignUpRequest;
-import com.example.springsocial.repository.Iemployers;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +39,6 @@ public class AuthController {
     @Autowired
     private TokenProvider tokenProvider;
 
-    @Autowired
-    private Iemployers iemployers;
-
-    @GetMapping("/hi")
-    public Optional<Employers> hi() {
-        Long id = (long) 1;
-        iemployers.save(new Employers("123456","benmerieme","ismail","0708108059","ismail.benmerieme@uit.ac.ma","kenitra","ben10","employer",null));
-        return  iemployers.findById(id);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -73,19 +62,20 @@ public class AuthController {
             throw new BadRequestException("Email address already in use.");
         }
         // Creating user's account
-        User user = new User();
-        user.setName(signUpRequest.getName());
+        Users user = new Users();
+        user.setNom(signUpRequest.getName());
+        user.setPrenom(signUpRequest.getSurname());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        User result = userRepository.save(user);
+        Users result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
-                .buildAndExpand(result.getId()).toUri();
+                .buildAndExpand(result.getIdEmp()).toUri();
 
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "User registered successfully@"));

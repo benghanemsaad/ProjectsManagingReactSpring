@@ -1,4 +1,4 @@
-package com.example.springsocial.model;
+package com.example.springsocial.entity;
 
 import javax.persistence.*;
 import java.util.*;
@@ -8,6 +8,7 @@ import java.util.*;
 @Table(name = "Employers")
 public class Employers {
     @Id
+    @GeneratedValue //(strategy = GenerationType.AUTO)
     public Long idEmp;
 
     public String matricule;
@@ -22,57 +23,37 @@ public class Employers {
 
     public String adresse;
 
-    public String passwoed;
+    public String password;
 
     public String role;
 
-    public Services services;
-
+    @OneToMany
     public List<Projets> projets;
 
     public Employers() {
     }
 
-    public Employers(Long idEmp) {
-        this.idEmp = idEmp;
-    }
 
-    public Employers(Long idEmp, String matricule, String nom, String prenom, String tel, String email, String adresse, String passwoed, String role) {
-        this.idEmp = idEmp;
+    public Employers(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role) {
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.email = email;
         this.adresse = adresse;
-        this.passwoed = passwoed;
+        this.password = password;
         this.role = role;
     }
 
-    public Employers(Long idEmp, String matricule, String nom, String prenom, String tel, String email, String adresse, String passwoed, String role, Services services) {
-        this.idEmp = idEmp;
+    public Employers(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role, List<Projets> projets) {
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.email = email;
         this.adresse = adresse;
-        this.passwoed = passwoed;
+        this.password = password;
         this.role = role;
-        this.services = services;
-    }
-
-    public Employers(Long idEmp, String matricule, String nom, String prenom, String tel, String email, String adresse, String passwoed, String role, Services services, List<Projets> projets) {
-        this.idEmp = idEmp;
-        this.matricule = matricule;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
-        this.email = email;
-        this.adresse = adresse;
-        this.passwoed = passwoed;
-        this.role = role;
-        this.services = services;
         this.projets = projets;
     }
 
@@ -132,12 +113,12 @@ public class Employers {
         this.adresse = adresse;
     }
 
-    public String getPasswoed() {
-        return passwoed;
+    public String getpassword() {
+        return password;
     }
 
-    public void setPasswoed(String passwoed) {
-        this.passwoed = passwoed;
+    public void setpassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {
@@ -146,24 +127,6 @@ public class Employers {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Services getServices() {
-        return services;
-    }
-
-    public void setServices(Services newServices) {
-        if (this.services == null || !this.services.equals(newServices)) {
-            if (this.services != null) {
-                Services oldServices = this.services;
-                this.services = null;
-                oldServices.removeEmployers(this);
-            }
-            if (newServices != null) {
-                this.services = newServices;
-                this.services.addEmployers(this);
-            }
-        }
     }
 
     public List<Projets> getProjets() {
@@ -191,7 +154,6 @@ public class Employers {
             this.projets = new ArrayList<Projets>();
         if (!this.projets.contains(newProjets)) {
             this.projets.add(newProjets);
-            newProjets.setEmployers(this);
         }
     }
 
@@ -201,19 +163,12 @@ public class Employers {
         if (this.projets != null)
             if (this.projets.contains(oldProjets)) {
                 this.projets.remove(oldProjets);
-                oldProjets.setEmployers((Employers) null);
             }
     }
 
     public void removeAllProjets() {
-        if (projets != null) {
-            Projets oldProjets;
-            for (Iterator iter = getIteratorProjets(); iter.hasNext(); ) {
-                oldProjets = (Projets) iter.next();
-                iter.remove();
-                oldProjets.setEmployers((Employers) null);
-            }
-        }
+        if (projets != null)
+            projets.clear();
     }
 
 }

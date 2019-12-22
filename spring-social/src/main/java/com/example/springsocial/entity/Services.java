@@ -1,4 +1,4 @@
-package com.example.springsocial.model;
+package com.example.springsocial.entity;
 
 
 import javax.persistence.*;
@@ -8,27 +8,22 @@ import java.util.*;
 @Table(name = "Services")
 public class Services {
     @Id
+    @GeneratedValue
     public Long idService;
 
     public String nomService;
 
-
+    @OneToMany
     public List<Employers> employers;
 
     public Services() {
     }
 
-    public Services(Long idService) {
-        this.idService = idService;
-    }
-
-    public Services(Long idService, String nomService) {
-        this.idService = idService;
+    public Services(String nomService) {
         this.nomService = nomService;
     }
 
-    public Services(Long idService, String nomService, List<Employers> employers) {
-        this.idService = idService;
+    public Services(String nomService, List<Employers> employers) {
         this.nomService = nomService;
         this.employers = employers;
     }
@@ -74,7 +69,6 @@ public class Services {
             this.employers = new ArrayList<Employers>();
         if (!this.employers.contains(newEmployers)) {
             this.employers.add(newEmployers);
-            newEmployers.setServices(this);
         }
     }
 
@@ -84,19 +78,12 @@ public class Services {
         if (this.employers != null)
             if (this.employers.contains(oldEmployers)) {
                 this.employers.remove(oldEmployers);
-                oldEmployers.setServices((Services) null);
             }
     }
 
     public void removeAllEmployers() {
-        if (employers != null) {
-            Employers oldEmployers;
-            for (Iterator iter = getIteratorEmployers(); iter.hasNext(); ) {
-                oldEmployers = (Employers) iter.next();
-                iter.remove();
-                oldEmployers.setServices((Services) null);
-            }
-        }
+        if (employers != null)
+            employers.clear();
     }
 
 }

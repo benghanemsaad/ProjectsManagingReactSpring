@@ -1,5 +1,6 @@
 package com.example.springsocial.controller;
 
+import com.example.springsocial.entity.Employers;
 import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.User;
@@ -7,6 +8,7 @@ import com.example.springsocial.payload.ApiResponse;
 import com.example.springsocial.payload.AuthResponse;
 import com.example.springsocial.payload.LoginRequest;
 import com.example.springsocial.payload.SignUpRequest;
+import com.example.springsocial.repository.Iemployers;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,6 +40,16 @@ public class AuthController {
 
     @Autowired
     private TokenProvider tokenProvider;
+
+    @Autowired
+    private Iemployers iemployers;
+
+    @GetMapping("/hi")
+    public Optional<Employers> hi() {
+        Long id = (long) 1;
+        iemployers.save(new Employers("123456","benmerieme","ismail","0708108059","ismail.benmerieme@uit.ac.ma","kenitra","ben10","employer",null));
+        return  iemployers.findById(id);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -56,7 +69,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException("Email address already in use.");
         }
         // Creating user's account

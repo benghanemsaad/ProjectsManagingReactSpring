@@ -1,4 +1,4 @@
-package com.example.springsocial.model;
+package com.example.springsocial.entity;
 
 import com.sun.javafx.beans.IDProperty;
 
@@ -9,6 +9,7 @@ import java.util.Date;
 @Table(name = "Taches")
 public class Taches {
     @Id
+    @GeneratedValue
     public Long numero;
 
     public Date dateFinale;
@@ -20,30 +21,14 @@ public class Taches {
     public String commentaire;
 
 
-    public Projets projets;
-
     public Taches() {
     }
 
-    public Taches(Long numero) {
-        this.numero = numero;
-    }
-
-    public Taches(Long numero, Date dateFinale, int dureeTache, String etat, String commentaire) {
-        this.numero = numero;
+    public Taches(Date dateFinale, int dureeTache, String etat, String commentaire) {
         this.dateFinale = dateFinale;
         this.dureeTache = dureeTache;
         this.etat = etat;
         this.commentaire = commentaire;
-    }
-
-    public Taches(Long numero, Date dateFinale, int dureeTache, String etat, String commentaire, Projets projets) {
-        this.numero = numero;
-        this.dateFinale = dateFinale;
-        this.dureeTache = dureeTache;
-        this.etat = etat;
-        this.commentaire = commentaire;
-        this.projets = projets;
     }
 
     public Long getNumero() {
@@ -86,22 +71,5 @@ public class Taches {
         this.commentaire = commentaire;
     }
 
-    public Projets getProjets() {
-        return projets;
-    }
-
-    public void setProjets(Projets newProjets) {
-        if (this.projets == null || !this.projets.equals(newProjets)) {
-            if (this.projets != null) {
-                Projets oldProjets = this.projets;
-                this.projets = null;
-                oldProjets.removeTaches(this);
-            }
-            if (newProjets != null) {
-                this.projets = newProjets;
-                this.projets.addTaches(this);
-            }
-        }
-    }
 
 }

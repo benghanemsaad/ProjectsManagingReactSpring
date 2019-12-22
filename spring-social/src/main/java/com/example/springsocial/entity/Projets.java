@@ -1,4 +1,4 @@
-package com.example.springsocial.model;
+package com.example.springsocial.entity;
 
 
 import javax.persistence.*;
@@ -8,6 +8,7 @@ import java.util.*;
 @Table(name = "Projets")
 public class Projets {
     @Id
+    @GeneratedValue
     public Long idProjet;
 
     public String description;
@@ -18,48 +19,29 @@ public class Projets {
 
     public float budget;
 
-
-    public Employers employers;
-
+    @OneToMany
     public List<Taches> taches;
 
     public Projets() {
     }
 
-    public Projets(Long idProjet) {
-        this.idProjet = idProjet;
-    }
 
-    public Projets(Long idProjet, String description, String objectif, int duree, float budget) {
-        this.idProjet = idProjet;
+    public Projets(String description, String objectif, int duree, float budget) {
         this.description = description;
         this.objectif = objectif;
         this.duree = duree;
         this.budget = budget;
     }
 
-    public Projets(Long idProjet, String description, String objectif, int duree, float budget, Employers employers) {
-        this.idProjet = idProjet;
-        this.description = description;
-        this.objectif = objectif;
-        this.duree = duree;
-        this.budget = budget;
-        this.employers = employers;
-    }
 
-    public Projets(Long idProjet, String description, String objectif, int duree, float budget, Employers employers, List<Taches> taches) {
-        this.idProjet = idProjet;
+    public Projets(String description, String objectif, int duree, float budget, List<Taches> taches) {
         this.description = description;
         this.objectif = objectif;
         this.duree = duree;
         this.budget = budget;
-        this.employers = employers;
         this.taches = taches;
     }
 
-    public Employers getEmployers() {
-        return employers;
-    }
 
     public Long getIdProjet() {
         return idProjet;
@@ -101,20 +83,6 @@ public class Projets {
         this.budget = budget;
     }
 
-    public void setEmployers(Employers newEmployers) {
-        if (this.employers == null || !this.employers.equals(newEmployers)) {
-            if (this.employers != null) {
-                Employers oldEmployers = this.employers;
-                this.employers = null;
-                oldEmployers.removeProjets(this);
-            }
-            if (newEmployers != null) {
-                this.employers = newEmployers;
-                this.employers.addProjets(this);
-            }
-        }
-    }
-
     public List<Taches> getTaches() {
         if (taches == null)
             taches = new ArrayList<Taches>();
@@ -141,7 +109,6 @@ public class Projets {
             this.taches = new ArrayList<Taches>();
         if (!this.taches.contains(newTaches)) {
             this.taches.add(newTaches);
-            newTaches.setProjets(this);
         }
     }
 
@@ -151,19 +118,12 @@ public class Projets {
         if (this.taches != null)
             if (this.taches.contains(oldTaches)) {
                 this.taches.remove(oldTaches);
-                oldTaches.setProjets((Projets) null);
             }
     }
 
     public void removeAllTaches() {
-        if (taches != null) {
-            Taches oldTaches;
-            for (Iterator iter = getIteratorTaches(); iter.hasNext(); ) {
-                oldTaches = (Taches) iter.next();
-                iter.remove();
-                oldTaches.setProjets((Projets) null);
-            }
-        }
+        if (taches != null)
+            taches.clear();
     }
 
 }

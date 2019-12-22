@@ -1,4 +1,8 @@
+import { CONSTANTS } from "../actions"
 
+
+let listID = 2 ;
+let cardID = 4 ; 
 //List Of lists and each of list has a array of cards
 const initialState = [
     {
@@ -28,7 +32,7 @@ const initialState = [
 
     {
         title : "First Episode",
-        id : 0,//add others 
+        id : 1,//add others 
         cards : [
             {
                 id : 0 ,
@@ -61,8 +65,39 @@ const initialState = [
     }
 ]
 
+//Get the latest list task id and intilize listID and Generate the new ID 
 const listsReducer = (state = initialState , action) => {
     switch (action.type) {
+        case CONSTANTS.ADD_LIST : 
+            const newList = {
+                title : action.payload,
+                cards : [],
+                id : listID
+            }
+            listID += 1 ;
+            return [...state , newList];
+        case CONSTANTS.ADD_CARD :
+            const newCard = {
+                id : cardID ,
+                text : action.payload.title,
+                deadlineDateAndhour: action.payload.deadline,
+                duration : action.payload.duration,
+                createdBy : "Admin",
+                state :"Etat",
+                comment :"Info" 
+            }
+            cardID += 1 ;
+            const newState = state.map(list => {
+                if(list.id === action.payload.listID){
+                     return {
+                         ...list,
+                         cards : [...list.cards,newCard]
+                     }
+                }else {
+                    return list;
+                }
+            });
+            return newState ; 
         default : 
             return state ;
     }

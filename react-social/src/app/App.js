@@ -15,9 +15,11 @@ import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 import PrivateRoute from '../common/PrivateRoute';
 import Alert from 'react-s-alert';
+import AppTmp from "../TrelloApp/AppTmp";
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -68,7 +70,7 @@ class App extends Component {
     if(this.state.loading) {
       return <LoadingIndicator />
     }
-
+//<Route path="/project" component={}></Route>
     return (
       <div className="app">
         <div className="app-top-box">
@@ -84,6 +86,7 @@ class App extends Component {
             <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>  
+            <Route path="/project" component={AppTmp}></Route>
             <Route component={NotFound}></Route>
           </Switch>
         </div>

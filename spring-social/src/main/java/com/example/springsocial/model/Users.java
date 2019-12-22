@@ -12,11 +12,11 @@ import java.util.*;
 @Table(name = "Users")
 public class Users {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    public Long idEmp;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idEmp;
 
 
-    public String matricule;
+    private String matricule;
 
     @Column(nullable = false)
     private String nom;
@@ -41,17 +41,17 @@ public class Users {
     private AuthProvider provider;
 
 
-    public String tel;
+    private String tel;
 
-    public String adresse;
+    private String adresse;
 
-   // @Column(nullable = false)
-    public String role;
+    // @Column(nullable = false)
+    private String role;
 
     private String providerId;
 
     @OneToMany
-    public List<Projets> projets;
+    private List<Projets> projets;
 
     public Users() {
     }
@@ -65,6 +65,7 @@ public class Users {
         this.adresse = adresse;
         this.password = password;
         this.role = role;
+        this.provider = AuthProvider.local;
     }
 
     public Users(String matricule, String nom, String prenom, String tel, String email, String adresse, String password, String role, List<Projets> projets) {
@@ -77,6 +78,7 @@ public class Users {
         this.password = password;
         this.role = role;
         this.projets = projets;
+        this.provider = AuthProvider.local;
     }
 
     public String getProviderId() {
@@ -185,13 +187,13 @@ public class Users {
 
     public List<Projets> getProjets() {
         if (projets == null)
-            projets = new ArrayList<Projets>();
+            projets = new ArrayList<>();
         return projets;
     }
 
     public Iterator getIteratorProjets() {
         if (projets == null)
-            projets = new ArrayList<Projets>();
+            projets = new ArrayList<>();
         return projets.iterator();
     }
 
@@ -205,19 +207,20 @@ public class Users {
         if (newProjets == null)
             return;
         if (this.projets == null)
-            this.projets = new ArrayList<Projets>();
+            this.projets = new ArrayList<>();
         if (!this.projets.contains(newProjets)) {
             this.projets.add(newProjets);
         }
     }
 
     public void removeProjets(Projets oldProjets) {
-        if (oldProjets == null)
+        if (oldProjets == null) {
             return;
-        if (this.projets != null)
-            if (this.projets.contains(oldProjets)) {
+        }
+        if (this.projets != null && this.projets.contains(oldProjets)) {
                 this.projets.remove(oldProjets);
-            }
+        }
+
     }
 
     public void removeAllProjets() {

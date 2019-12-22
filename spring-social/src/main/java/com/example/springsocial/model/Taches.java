@@ -1,6 +1,5 @@
 package com.example.springsocial.model;
 
-import com.sun.javafx.beans.IDProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,13 +11,13 @@ public class Taches {
     @GeneratedValue
     public Long numero;
 
-    public Date dateFinale;
+    private Date dateFinale;
 
-    public int dureeTache;
+    private int dureeTache;
 
-    public String etat;
+    private String etat;
 
-    public String commentaire;
+    private String commentaire;
 
 
     public Taches() {

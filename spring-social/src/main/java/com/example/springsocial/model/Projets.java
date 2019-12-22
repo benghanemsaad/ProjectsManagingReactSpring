@@ -11,16 +11,16 @@ public class Projets {
     @GeneratedValue
     public Long idProjet;
 
-    public String description;
+    private String description;
 
-    public String objectif;
+    private String objectif;
 
-    public int duree;
+    private int duree;
 
-    public float budget;
+    private float budget;
 
     @OneToMany
-    public List<Taches> taches;
+    private List<Taches> taches;
 
     public Projets() {
     }
@@ -85,14 +85,14 @@ public class Projets {
 
     public List<Taches> getTaches() {
         if (taches == null)
-            taches = new ArrayList<Taches>();
+            taches = new ArrayList<>();
         return taches;
     }
 
 
     public Iterator getIteratorTaches() {
         if (taches == null)
-            taches = new ArrayList<Taches>();
+            taches = new ArrayList<>();
         return taches.iterator();
     }
 
@@ -106,7 +106,7 @@ public class Projets {
         if (newTaches == null)
             return;
         if (this.taches == null)
-            this.taches = new ArrayList<Taches>();
+            this.taches = new ArrayList<>();
         if (!this.taches.contains(newTaches)) {
             this.taches.add(newTaches);
         }
@@ -115,10 +115,8 @@ public class Projets {
     public void removeTaches(Taches oldTaches) {
         if (oldTaches == null)
             return;
-        if (this.taches != null)
-            if (this.taches.contains(oldTaches)) {
+        if (this.taches != null && this.taches.contains(oldTaches))
                 this.taches.remove(oldTaches);
-            }
     }
 
     public void removeAllTaches() {

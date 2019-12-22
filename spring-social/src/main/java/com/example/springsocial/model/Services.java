@@ -9,12 +9,12 @@ import java.util.*;
 public class Services {
     @Id
     @GeneratedValue
-    public Long idService;
+    private Long idService;
 
-    public String nomService;
+    private String nomService;
 
     @OneToMany
-    public List<Users> employers;
+    private List<Users> employers;
 
     public Services() {
     }
@@ -46,13 +46,13 @@ public class Services {
 
     public List<Users> getEmployers() {
         if (employers == null)
-            employers = new ArrayList<Users>();
+            employers = new ArrayList<>();
         return employers;
     }
 
     public Iterator getIteratorEmployers() {
         if (employers == null)
-            employers = new ArrayList<Users>();
+            employers = new ArrayList<>();
         return employers.iterator();
     }
 
@@ -66,7 +66,7 @@ public class Services {
         if (newEmployers == null)
             return;
         if (this.employers == null)
-            this.employers = new ArrayList<Users>();
+            this.employers = new ArrayList<>();
         if (!this.employers.contains(newEmployers)) {
             this.employers.add(newEmployers);
         }
@@ -75,10 +75,8 @@ public class Services {
     public void removeEmployers(Users oldEmployers) {
         if (oldEmployers == null)
             return;
-        if (this.employers != null)
-            if (this.employers.contains(oldEmployers)) {
+        if (this.employers != null && this.employers.contains(oldEmployers))
                 this.employers.remove(oldEmployers);
-            }
     }
 
     public void removeAllEmployers() {

@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("/getEmplyer")
     @ResponseBody
-    public Optional<Users> hi(@RequestParam(name = "id", required = false) Long id) {
-        return  userRepository.findById(id);
+    public Users hi(@RequestParam(name = "id", required = false) Long id) {
+        return  userRepository.findById(id).orElse(new Users());
     }
 }

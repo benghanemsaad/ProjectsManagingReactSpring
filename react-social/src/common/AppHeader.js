@@ -3,19 +3,24 @@ import { Link, NavLink } from 'react-router-dom';
 import './AppHeader.css';
 
 class AppHeader extends Component {
+
+    
     render() {
         return (
             <header className="app-header">
                 <div className="container">
                     <div className="app-branding">
-                        <Link to="/" className="app-title">Spring Social</Link>
+                        <Link to="/" className="app-title">Systéme de SUIVI</Link>
                     </div>
                     <div className="app-options">
                         <nav className="app-nav">
                                 { this.props.authenticated ? (
                                     <ul>
                                         <li>
-                                            <NavLink to="/profile">Profile</NavLink>
+                                            <NavLink to="/profile">Mon Profil</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/myproject">Mon Projet</NavLink>
                                         </li>
                                         <li>
                                             <a onClick={this.props.onLogout}>Logout</a>

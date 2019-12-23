@@ -1,9 +1,24 @@
 import { CONSTANTS } from "../actions"
-
+import { getAllListTask } from '../util/APIUtils';
 
 let listID = 2 ;
 let cardID = 4 ; 
 //List Of lists and each of list has a array of cards
+
+
+getAllListTask()
+    .then(response => {
+        doSometing(response)
+    }).catch(error => {
+      console.log(error);
+    });    
+
+let initialState=[];
+ 
+function doSometing (response) {
+    initialState = response ; 
+}
+  /*
 const initialState = [
     {
         title : "Last Episode",
@@ -63,7 +78,7 @@ const initialState = [
             }
         ]
     }
-]
+]*/
 
 //Get the latest list task id and intilize listID and Generate the new ID 
 const listsReducer = (state = initialState , action) => {

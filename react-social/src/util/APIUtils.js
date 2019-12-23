@@ -34,6 +34,34 @@ export function getCurrentUser() {
     });
 }
 
+
+export function getAllListTask(){
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/api/v1/listeTaches/getAll",
+        method: 'GET'
+    });
+}
+
+export function addTaskToFlow(task , listID){
+    return request({
+        url: API_BASE_URL + "/api/v1/listeTaches/addTache/"+listID,
+        method: 'POST',
+        body: JSON.stringify(task)
+    });
+}
+
+export function addTaskflow(taskflow){
+    return request({
+        url: API_BASE_URL + "/api/v1/listeTaches/add",
+        method: 'POST',
+        body: JSON.stringify(taskflow)
+    });
+}
+
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",

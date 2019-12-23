@@ -6,6 +6,13 @@ import Textarea from 'react-textarea-autosize';
 import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import { addList ,addCard } from "../actions";
+import Alert from 'react-s-alert';
+import { addTaskToFlow } from "../util/APIUtils";
+import { addTaskflow } from '../util/APIUtils';
+import  { Redirect } from 'react-router-dom'
+
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 class TrelloActionButton extends React.Component {
 
@@ -54,13 +61,25 @@ class TrelloActionButton extends React.Component {
                 text : ""
             });
             dispatch(addList(text));
+
+            const taskflow = {
+                text : text
+            }
+
+            addTaskflow(taskflow)
+                .then(response => {
+                    Alert.success("BLOQUE DE TACHE AJOUTE");
+                }).catch(error => {
+                    Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+                });
+                
         }
 
         return;
     }
 
     handleAddCard =() =>{
-        const { dispatch , listID } = this.props;
+        const { dispatch , listID , load } = this.props;
         const { text , duration , deadline } = this.state;
         if(text){
             this.setState({
@@ -69,6 +88,27 @@ class TrelloActionButton extends React.Component {
                 deadline : ""
             });
             dispatch(addCard(listID,text,duration,deadline));
+            const newCard = {
+                text : this.state.text,
+                deadlineDateAndhour: this.state.deadline,
+                duration : this.state.duration,
+                createdBy : "Admin",
+                state :"Etat",
+                comment :"Info" 
+            };
+
+            
+
+            addTaskToFlow(newCard , listID)
+                .then(response => {
+                    Alert.success("TACHE AJOUTEE");
+                }).catch(error => {
+                    Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+                });
+
+
+
+
         }
 
         return;
@@ -85,12 +125,12 @@ class TrelloActionButton extends React.Component {
         return (
             <div
                 onClick={this.openForm}
-             style={{
-                ...styles.openFormButtonGroup,
-                opacity : buttonTextOpacity, 
-                color : buttonTextColor , 
-                background : buttonTextBackground
-                }}>
+                    style={{
+                        ...styles.openFormButtonGroup,
+                        opacity : buttonTextOpacity, 
+                        color : buttonTextColor , 
+                        background : buttonTextBackground
+                        }}>
                 <Icon>add</Icon>
                 <p>{buttonText}</p>
             </div>

@@ -62,6 +62,11 @@ class App extends Component {
     Alert.success("You're safely logged out!");
   }
 
+  handleLogint(){
+    this.setState({
+      authenticated: false})
+  }
+
   componentDidMount() {
     this.loadCurrentlyLoggedInUser();
   }
@@ -81,12 +86,18 @@ class App extends Component {
             <Route exact path="/" component={Home}></Route>           
             <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={Profile}></PrivateRoute>
+
+            <PrivateRoute path="/myproject" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={AppTmp}></PrivateRoute>
+
             <Route path="/login"
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
             <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>  
-            <Route path="/project" component={AppTmp}></Route>
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route> 
+
+           
+            
             <Route component={NotFound}></Route>
           </Switch>
         </div>

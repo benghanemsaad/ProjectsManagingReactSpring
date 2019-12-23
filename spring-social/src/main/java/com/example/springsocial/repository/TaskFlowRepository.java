@@ -1,4 +1,7 @@
 package com.example.springsocial.repository;
 
-public interface TaskFlowRepository {
+import com.example.springsocial.model.TaskFlow;
+import org.springframework.data.repository.CrudRepository;
+
+public interface TaskFlowRepository extends CrudRepository<TaskFlow, Long> {
 }

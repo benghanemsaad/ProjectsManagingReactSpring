@@ -63,7 +63,7 @@ class TrelloActionButton extends React.Component {
             dispatch(addList(text));
 
             const taskflow = {
-                text : text
+                title : text
             }
 
             addTaskflow(taskflow)
@@ -72,7 +72,7 @@ class TrelloActionButton extends React.Component {
                 }).catch(error => {
                     Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
                 });
-                
+            //window.location.reload(false);
         }
 
         return;
@@ -90,9 +90,9 @@ class TrelloActionButton extends React.Component {
             dispatch(addCard(listID,text,duration,deadline));
             const newCard = {
                 text : this.state.text,
-                deadlineDateAndhour: this.state.deadline,
+                deadLineDateAndhour: this.state.deadline,
                 duration : this.state.duration,
-                createdBy : "Admin",
+                createdBy : this.props.email,
                 state :"Etat",
                 comment :"Info" 
             };

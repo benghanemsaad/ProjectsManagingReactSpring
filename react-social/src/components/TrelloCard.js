@@ -39,9 +39,6 @@ const TrelloCard = (props) => {
                 shrink: true,
                 }}
             />
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
         </Card>
     );
 }

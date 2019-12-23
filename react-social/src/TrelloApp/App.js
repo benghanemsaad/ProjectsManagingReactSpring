@@ -5,9 +5,6 @@ import TrelloActionButton from "../components/TrelloActionButton";
 import { getAllListTask } from '../util/APIUtils';
 
 
-
-
-
 class App extends Component{
     constructor(props) {
         super(props);
@@ -51,7 +48,7 @@ class App extends Component{
                 <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
                 <div style={styles.listsContainer}>
                     { this.state.initialState.map(list => 
-                    <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  onLoad  = {this.loadListAfterAdd} />
+                    <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  onLoad  = {this.loadListAfterAdd} email = {this.props.currentUser.email} />
                     )}
                     <TrelloActionButton list />
                 </div>

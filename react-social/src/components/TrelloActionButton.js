@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { addList ,addCard } from "../actions";
 import Alert from 'react-s-alert';
 import { addTaskToFlow } from "../util/APIUtils";
-import { addTaskflow } from '../util/APIUtils';
+
 import  { Redirect } from 'react-router-dom'
 
 import 'react-s-alert/dist/s-alert-default.css';
@@ -63,16 +63,13 @@ class TrelloActionButton extends React.Component {
             dispatch(addList(text));
 
             const taskflow = {
-                title : text
+                title : text,
+                cards : []
             }
 
-            addTaskflow(taskflow)
-                .then(response => {
-                    Alert.success("BLOQUE DE TACHE AJOUTE");
-                }).catch(error => {
-                    Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
-                });
-            //window.location.reload(false);
+                this.props.laFonction(taskflow);
+
+            
         }
 
         return;
@@ -96,19 +93,7 @@ class TrelloActionButton extends React.Component {
                 state :"Etat",
                 comment :"Info" 
             };
-
-            
-
-            addTaskToFlow(newCard , listID)
-                .then(response => {
-                    Alert.success("TACHE AJOUTEE");
-                }).catch(error => {
-                    Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
-                });
-
-
-
-
+            this.props.laFonction2(newCard , listID);
         }
 
         return;

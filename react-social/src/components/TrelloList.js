@@ -3,12 +3,12 @@ import TrelloCard from "./TrelloCard";
 import TrelloActionButton from "./TrelloActionButton";
 
 
-const TrelloList = ({title,cards,listID,email}) => {
+const TrelloList = ({title,cards,listID,email, laFonction2}) => {
     return (
         <div style={styles.container}>
         <h4>{title}</h4>
-        { cards.map(card => <TrelloCard  key={card.id } text ={card.text} deadlineDateAndhour ={card.deadLineDateAndhour} createdBy = {card.createdBy} duration = {card.duration}  />)}
-        <TrelloActionButton listID = {listID} email = {email}/>
+        {cards.map(card => <TrelloCard  key={card.id } text ={card.text} deadlineDateAndhour ={card.deadLineDateAndhour} createdBy = {card.createdBy} duration = {card.duration}  />)}
+        <TrelloActionButton listID = {listID} email = {email} laFonction2 = { laFonction2 } />
         </div>        
         
     );

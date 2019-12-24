@@ -3,6 +3,7 @@ package com.example.springsocial.controller;
 import com.example.springsocial.model.Card;
 import com.example.springsocial.model.Projet;
 import com.example.springsocial.model.TaskFlow;
+import com.example.springsocial.model.ValidateProjectEmp;
 import com.example.springsocial.repository.ProjetRepository;
 import com.example.springsocial.repository.TaskFlowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,19 +37,23 @@ public class ProjetController {
         return(projet);
     }
 
-    /*@GetMapping(value = "/{id_projet}/taskflows/{id_taskflow}")
-    @ResponseBody
-    public TaskFlow addExistTaskFlow(@PathVariable Long id_projet , @PathVariable Long id_taskflow){
-        Card card = taskFlowRepository.findById(id_taskflow).get();
-        TaskFlow tf = taskFlowRepository.findById(id_list).get();
-        tf.addTask(card);
-        taskFlowRepository.save(tf);
-        return(tf);
-    }*/
-
     @PostMapping(value = "/add")
     @ResponseBody
     public Projet addProject(@RequestBody Projet projet){
         return projetRepository.save(projet);
+    }
+
+    @GetMapping(value = "{id_projet}/allvalidation")
+    @ResponseBody
+    public Collection<ValidateProjectEmp> getAllValidation(@PathVariable Long id_projet){
+        Projet projet = projetRepository.findById(id_projet).orElse(new Projet());
+        return projet.getValidations();
+    }
+
+    @GetMapping(value = "{id_projet}/alltaskflow")
+    @ResponseBody
+    public Collection<TaskFlow> getAllTaskFlow(@PathVariable Long id_projet){
+        Projet projet = projetRepository.findById(id_projet).orElse(new Projet());
+        return projet.getTaskFlows();
     }
 }

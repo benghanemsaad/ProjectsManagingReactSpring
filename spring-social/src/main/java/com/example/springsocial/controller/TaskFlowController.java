@@ -74,8 +74,7 @@ public class TaskFlowController {
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<TaskFlow> updateVehicle(
-                                                  @RequestBody TaskFlow taskFlow){
+    public ResponseEntity<TaskFlow> updateTaskFlow(@RequestBody TaskFlow taskFlow){
         return new ResponseEntity<>(taskFlowRepository.save(taskFlow), HttpStatus.OK);
     }
 

@@ -14,6 +14,16 @@ public class Projet {
 
     private String description;
 
+    private String createdBy;
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     private String duree;
 
     private String objectif;
@@ -27,18 +37,21 @@ public class Projet {
     public Projet() {
     }
 
-    public Projet(String description, String duree, String objectif) {
+    public Projet(String description, String createdBy, String duree, String objectif) {
         this.description = description;
         this.duree = duree;
         this.objectif = objectif;
+        this.createdBy = createdBy;
     }
 
-    public Projet(float budget, String description, String duree, String objectif) {
+    public Projet(float budget, String createdBy, String description, String duree, String objectif) {
         this.budget = budget;
         this.description = description;
         this.duree = duree;
         this.objectif = objectif;
+        this.createdBy = createdBy;
     }
+
 
     public long getId() {
         return id;

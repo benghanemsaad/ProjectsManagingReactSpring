@@ -8,8 +8,12 @@ import { addTaskToFlow } from "../util/APIUtils";
 import { moveTask } from "../util/APIUtils";
 import Alert from 'react-s-alert';
 import { DragDropContext } from "react-beautiful-dnd";
+import styled from "styled-components";
 
-
+const ListContainer = styled.div`
+    display : flex;
+    flex-direction : row;
+`;
 
 
 class App extends Component{
@@ -25,7 +29,7 @@ class App extends Component{
 
     loadList = () => {
         //alert("je suis la!");
-        getAllListTask()
+        getAllListTask(this.props.id)
             .then(response => {
             this.setState({
                 initialState: response,
@@ -105,24 +109,19 @@ class App extends Component{
             <DragDropContext onDragEnd = { this.onDragEnd}>
             <div className="App">
                 <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
-                <div style={styles.listsContainer}>
+                <h1>id : <span> {this.props.id} </span></h1>
+                <ListContainer>
                     { this.state.initialState.map(list => 
                     <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
                     )}
                     <TrelloActionButton list laFonction={this.addTaskflowInReact} />
-                </div>
+                </ListContainer>
             </div>
             </DragDropContext>
         );
     }
 }
 
-const styles = {
-    listsContainer : {
-        display : "flex",
-        flexDirection : "row"
-    }
-}
 
 const mapStateToProps = state => ({
     lists : state.lists

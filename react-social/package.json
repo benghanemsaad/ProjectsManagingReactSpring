@@ -12,6 +12,7 @@
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
+    "react-s-alert": "^1.4.1",
     "react-scripts": "2.1.5",
     "react-spring": "^8.0.18",
     "react-textarea-autosize": "^7.1.0",

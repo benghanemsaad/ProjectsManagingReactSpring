@@ -44,13 +44,13 @@ export function moveTask(src,dest,idCard) {
 
 
 
-export function getAllListTask(){
+export function getAllListTask(id_projet){
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + "/api/v1/listeTaches/getAll",
+        url: API_BASE_URL + "/api/v1/project/"+id_projet+"/alltaskflow",
         method: 'GET'
     });
 }
@@ -60,6 +60,13 @@ export function addTaskToFlow(task , listID){
         url: API_BASE_URL + "/api/v1/listeTaches/addTache/"+listID,
         method: 'POST',
         body: JSON.stringify(task)
+    });
+}
+
+export function getAllProjects(){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/getAll",
+        method: 'GET'
     });
 }
 

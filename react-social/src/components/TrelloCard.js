@@ -5,13 +5,40 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField'; 
 import { Draggable } from "react-beautiful-dnd";
 
-const styles = {
+
+let styles = {
     cardContainer: {
         marginBottom : 8
     }
 }
 
+let backgroundcolor = "" ; 
+
 const TrelloCard = (props) => {
+
+    if(props.comment === "Urgent"){
+        styles = {
+            cardContainer: {
+                marginBottom : 8,
+                backgroundColor : "#f44336"
+            }
+        }
+    }else if (props.comment ==="Informatif"){
+        styles = {
+            cardContainer: {
+                marginBottom : 8,
+                backgroundColor : "#7e57c2"
+            }
+        }
+    }else if (props.comment ==="Quotidien"){
+
+        styles = {
+            cardContainer: {
+                marginBottom : 8,
+                backgroundColor : "#2196f3"
+            }
+        }
+    }
     return(
         <Draggable draggableId={String(props.id)} index = {props.index}>
             {provided =>(

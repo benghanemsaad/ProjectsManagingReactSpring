@@ -8,6 +8,13 @@ import { connect } from "react-redux";
 import { addList ,addCard } from "../actions";
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import Dialog from '@material-ui/core/Dialog';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 class TrelloActionButton extends React.Component {
 
@@ -15,7 +22,8 @@ class TrelloActionButton extends React.Component {
         formOpen : false ,
         text : "",
         duration : 0 ,
-        deadline : ""
+        deadline : "",
+
     };
 
     openForm = () => {
@@ -86,7 +94,7 @@ class TrelloActionButton extends React.Component {
                 duration : this.state.duration,
                 createdBy : this.props.email,
                 state :"Etat",
-                comment :"Info" 
+                comment :this.state.comment 
             };
             this.props.laFonction2(newCard , listID);
         }
@@ -117,6 +125,12 @@ class TrelloActionButton extends React.Component {
         )
     };
 
+    handleSelect = (e) =>{
+        this.setState({
+            comment : e.target.value 
+        })
+    }
+
     renderForm = () => {
         const { list } = this.props;
         const placeholder = list ? "Entrer le libellé de La liste..." : "Entrer la description de la tâche...";
@@ -141,6 +155,8 @@ class TrelloActionButton extends React.Component {
                 padding : "6px 8px 2px"
             }
         }
+
+
 
         if(!list){
             return(
@@ -183,6 +199,12 @@ class TrelloActionButton extends React.Component {
                             onChange = {this.handleInputChangeDeadline}
                         />
 
+                            <InputLabel id="label">comment</InputLabel>
+                            <Select labelId="label" id="select" value={this.state.comment} onChange = {this.handleSelect} style={{margin : 10}}>
+                            <MenuItem value="Urgent">Urgent</MenuItem>
+                            <MenuItem value="Quotidien">Quotidien</MenuItem>
+                            <MenuItem value="Informatif">Informatif</MenuItem>
+                            </Select>
          
                     </Card>
                     

@@ -54,6 +54,24 @@ public class TaskFlowController {
     }
 
 
+    @GetMapping(value = "/{id_list_source}/to/{id_list_destination}/tache/{id_tache}")
+    @ResponseBody
+    public Collection<TaskFlow> moveToOtherTaskflow(@PathVariable Long id_list_source , @PathVariable Long id_list_destination , @PathVariable Long id_tache){
+        TaskFlow taskFlowSource = taskFlowRepository.findById(id_list_source).get();
+        TaskFlow taskFlowDestination= taskFlowRepository.findById(id_list_destination).get() ;
+
+        Card card = cardRepository.findById(id_tache).get();
+
+        taskFlowSource.deleteTask(card);
+        taskFlowDestination.addTask(card);
+        taskFlowRepository.save(taskFlowSource);
+        taskFlowRepository.save(taskFlowDestination);
+
+        return (Collection<TaskFlow>) taskFlowRepository.findAll();
+
+    }
+
+
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TaskFlow> updateVehicle(

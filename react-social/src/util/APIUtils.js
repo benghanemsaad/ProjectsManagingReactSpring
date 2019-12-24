@@ -34,6 +34,15 @@ export function getCurrentUser() {
     });
 }
 
+export function moveTask(src,dest,idCard) {
+    
+    return request({
+        url: API_BASE_URL + "/api/v1/listeTaches/"+src+"/to/"+dest+"/tache/"+idCard,
+        method: 'GET'
+    });
+}
+
+
 
 export function getAllListTask(){
     if(!localStorage.getItem(ACCESS_TOKEN)) {

@@ -5,7 +5,11 @@ import TrelloActionButton from "../components/TrelloActionButton";
 import { getAllListTask } from '../util/APIUtils';
 import { addTaskflow } from '../util/APIUtils';
 import { addTaskToFlow } from "../util/APIUtils";
+import { moveTask } from "../util/APIUtils";
 import Alert from 'react-s-alert';
+import { DragDropContext } from "react-beautiful-dnd";
+
+
 
 
 class App extends Component{
@@ -66,15 +70,39 @@ class App extends Component{
         
     }
 
+    moveTaskReact = (source , destination , draggableId) =>{
+        moveTask(source , destination , draggableId)
+        .then(response => {
+            Alert.success("TACHE DEPLACEE");
+            this.setState({
+                initialState : response
+            })
+        }).catch(error => {
+            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+        })
+    }
 
     componentDidMount(){
         this.loadList();
     }
 
 
+    onDragEnd = (result) => {
+        const { destination , source , draggableId } = result ;
+        if(!destination){
+            return ; 
+        }
+        this.moveTaskReact(source.droppableId , destination.droppableId , draggableId);
+        //this.loadList();
+
+
+    }
+
+
     render(){
-        const { lists , authenticated , currentUser } = this.props;
+        //const { lists , authenticated , currentUser } = this.props;
         return(
+            <DragDropContext onDragEnd = { this.onDragEnd}>
             <div className="App">
                 <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
                 <div style={styles.listsContainer}>
@@ -84,6 +112,7 @@ class App extends Component{
                     <TrelloActionButton list laFonction={this.addTaskflowInReact} />
                 </div>
             </div>
+            </DragDropContext>
         );
     }
 }

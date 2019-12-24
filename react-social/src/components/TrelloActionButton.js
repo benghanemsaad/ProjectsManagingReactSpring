@@ -6,11 +6,6 @@ import Textarea from 'react-textarea-autosize';
 import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import { addList ,addCard } from "../actions";
-import Alert from 'react-s-alert';
-import { addTaskToFlow } from "../util/APIUtils";
-
-import  { Redirect } from 'react-router-dom'
-
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
@@ -76,7 +71,7 @@ class TrelloActionButton extends React.Component {
     }
 
     handleAddCard =() =>{
-        const { dispatch , listID , load } = this.props;
+        const { dispatch , listID } = this.props;
         const { text , duration , deadline } = this.state;
         if(text){
             this.setState({
@@ -171,6 +166,7 @@ class TrelloActionButton extends React.Component {
                             value = {this.state.duration}
                             onChange = {this.handleInputChangeDuration}
                         />
+                        
     
                         
                          <TextField
@@ -186,6 +182,8 @@ class TrelloActionButton extends React.Component {
                             value = {this.state.deadline}
                             onChange = {this.handleInputChangeDeadline}
                         />
+
+         
                     </Card>
                     
                     <div style = {styles.formButtonGroup}>

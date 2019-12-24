@@ -39,6 +39,10 @@ public class TaskFlow {
         this.cards.add(card);
     }
 
+    public void deleteTask(Card card){
+        this.cards.remove(card);
+    }
+
 
     public String getTitle() {
         return title;

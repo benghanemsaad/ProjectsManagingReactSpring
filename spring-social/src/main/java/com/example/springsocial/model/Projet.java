@@ -40,6 +40,14 @@ public class Projet {
         this.objectif = objectif;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public float getBudget() {
         return budget;
     }

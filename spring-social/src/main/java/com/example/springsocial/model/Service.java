@@ -16,7 +16,7 @@ public class Service {
 
     @OneToMany
     private Collection<User> employee ;
-
+    @OneToOne
     private User chefService ;
 
     public Service(String name) {

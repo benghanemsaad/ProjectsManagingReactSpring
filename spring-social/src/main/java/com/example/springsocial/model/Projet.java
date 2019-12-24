@@ -14,15 +14,15 @@ public class Projet {
 
     private String description;
 
-    private String duree ;
+    private String duree;
 
-    private String objectif ;
-
-    @OneToMany
-    private Collection<ValidateProjectEmp> validations ;
+    private String objectif;
 
     @OneToMany
-    private Collection<TaskFlow> taskFlows ;
+    private Collection<ValidateProjectEmp> validations;
+
+    @OneToMany
+    private Collection<TaskFlow> taskFlows;
 
     public Projet() {
     }
@@ -86,5 +86,21 @@ public class Projet {
 
     public void setTaskFlows(Collection<TaskFlow> taskFlows) {
         this.taskFlows = taskFlows;
+    }
+
+    public void addTaskFlow(TaskFlow taskFlow) {
+        this.taskFlows.add(taskFlow);
+    }
+
+    public void deleteTaskFlow(TaskFlow taskFlow) {
+        this.taskFlows.remove(taskFlow);
+    }
+
+    public void addValidateProjectEmp(ValidateProjectEmp validateProjectEmp) {
+        this.validations.add(validateProjectEmp);
+    }
+
+    public void deleteValidateProjectEmp(ValidateProjectEmp validateProjectEmp) {
+        this.validations.remove(validateProjectEmp);
     }
 }

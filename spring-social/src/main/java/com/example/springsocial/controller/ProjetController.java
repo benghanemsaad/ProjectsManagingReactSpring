@@ -29,12 +29,12 @@ public class ProjetController {
 
     @PostMapping(value = "/addtaskflow/{id_list}")
     @ResponseBody
-    public Projet addTaskFlow(@PathVariable Long id_list , @RequestBody TaskFlow taskFlow){
+    public Collection<TaskFlow> addTaskFlow(@PathVariable Long id_list , @RequestBody TaskFlow taskFlow){
         taskFlowRepository.save(taskFlow);
         Projet projet = projetRepository.findById(id_list).get();
         projet.addTaskFlow(taskFlow);
         projetRepository.save(projet);
-        return(projet);
+        return(projet.getTaskFlows());
     }
 
     @PostMapping(value = "/add")
@@ -43,14 +43,14 @@ public class ProjetController {
         return projetRepository.save(projet);
     }
 
-    @GetMapping(value = "{id_projet}/allvalidation")
+    @GetMapping(value = "/{id_projet}/allvalidation")
     @ResponseBody
     public Collection<ValidateProjectEmp> getAllValidation(@PathVariable Long id_projet){
         Projet projet = projetRepository.findById(id_projet).orElse(new Projet());
         return projet.getValidations();
     }
 
-    @GetMapping(value = "{id_projet}/alltaskflow")
+    @GetMapping(value = "/{id_projet}/alltaskflow")
     @ResponseBody
     public Collection<TaskFlow> getAllTaskFlow(@PathVariable Long id_projet){
         Projet projet = projetRepository.findById(id_projet).orElse(new Projet());

@@ -1,6 +1,5 @@
 import React , { Component } from "react";
 import App from "./App";
-import { useParams } from 'react-router-dom';
 
 import store from '../store';
 
@@ -20,7 +19,7 @@ class AppTmp extends Component{
     render(){
         return(
             <Provider store={store}>
-                        <App currentUser={this.props.currentUser} id = {this.props.match.params.id} />
+                        <App currentUser={this.props.currentUser} id={this.props.match.params.id} />
             </Provider>
         );
     }

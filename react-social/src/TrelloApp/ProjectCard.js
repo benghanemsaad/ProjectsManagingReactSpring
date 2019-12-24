@@ -27,13 +27,11 @@ const ProjectCard = (props) => {
                 Durée Estimée : {props.duree}
                 </Typography>
                 <Typography gutterBottom>
-                Crée Par : <Avatar>H</Avatar>
+                Crée Par : <Avatar>{props.createdBy.charAt(0)}</Avatar>
                 {props.createdBy}
                 </Typography>
             </CardContent>
             <CardActions>
-
-            
             <Link to={link} >
                 <Button type="button" variant="contained" color="primary" >
                     Explorer 

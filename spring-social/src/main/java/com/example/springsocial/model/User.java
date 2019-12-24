@@ -23,6 +23,8 @@ public class User {
 
     private String imageUrl;
 
+    private String role ;//Admin , Chef , Simple
+
     @Column(nullable = false)
     private Boolean emailVerified = false;
 

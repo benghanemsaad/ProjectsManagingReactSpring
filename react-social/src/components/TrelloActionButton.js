@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 
+
 class TrelloActionButton extends React.Component {
 
     state ={
@@ -117,7 +118,8 @@ class TrelloActionButton extends React.Component {
                         ...styles.openFormButtonGroup,
                         opacity : buttonTextOpacity, 
                         color : buttonTextColor , 
-                        background : buttonTextBackground
+                        background : buttonTextBackground,
+                        height : 60
                         }}>
                 <Icon>add</Icon>
                 <p>{buttonText}</p>

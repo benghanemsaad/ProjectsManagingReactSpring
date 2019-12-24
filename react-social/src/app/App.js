@@ -94,6 +94,7 @@ class App extends Component {
               component={AllProject}></PrivateRoute>
 
             <PrivateRoute path="/project/:id" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              
               component={AppTmp}></PrivateRoute>
 
             <Route path="/login"

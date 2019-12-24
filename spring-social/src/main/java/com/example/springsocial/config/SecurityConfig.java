@@ -106,6 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/*/*/*/*/*",
                         "/api/v1/*/*/*/*/*/*",
                         "/api/v1/*/*/*/*/*/*/*",
+                        "/api/v1/*/*/*/*/*/*/*/*",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",

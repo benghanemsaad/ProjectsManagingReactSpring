@@ -35,7 +35,7 @@ export default class AllProject extends React.Component{
             <div>
             <h1>All Projects</h1>
             {this.state.projects.map(
-                project => <ProjectCard description = {project.description} id = {project.id} budget= {project.budget} duree= {project.duree} />
+                project => <ProjectCard createdBy = {project.createdBy} description = {project.description} id = {project.id} budget= {project.budget} duree= {project.duree} />
                 )}
             </div>
         );

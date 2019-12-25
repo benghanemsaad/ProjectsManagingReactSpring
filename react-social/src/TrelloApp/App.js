@@ -102,23 +102,45 @@ class App extends Component{
     }
 
 
+
+    affichage = (role) => {
+        if(role ==="Chef"){
+            return (
+                <DragDropContext onDragEnd = { this.onDragEnd}>
+                <div className="App">
+                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
+                    <h1>id of project : <span> {this.props.id} </span></h1>
+                    <ListContainer>
+                        { this.state.initialState.map(list => 
+                        <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
+                        )}
+                        <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
+                    </ListContainer>
+                    <ValidateProject  />
+                </div>
+                </DragDropContext>
+            );
+        }else{
+            return(
+                <DragDropContext onDragEnd = { this.onDragEnd}>
+                <div className="App">
+                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
+                    <h1>id of project : <span> {this.props.id} </span></h1>
+                    <ListContainer>
+                        { this.state.initialState.map(list => 
+                        <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
+                        )}
+                        <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
+                    </ListContainer>
+                </div>
+                </DragDropContext>
+            );
+        }
+        
+    }
+
     render(){
-        //const { lists , authenticated , currentUser } = this.props;
-        return(
-            <DragDropContext onDragEnd = { this.onDragEnd}>
-            <div className="App">
-                <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
-                <h1>id of project : <span> {this.props.id} </span></h1>
-                <ListContainer>
-                    { this.state.initialState.map(list => 
-                    <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
-                    )}
-                    <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
-                </ListContainer>
-                <ValidateProject  />
-            </div>
-            </DragDropContext>
-        );
+        return this.affichage(this.props.currentUser.role);
     }
 }
 

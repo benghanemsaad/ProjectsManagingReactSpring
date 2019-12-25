@@ -2,7 +2,7 @@ package com.example.springsocial.security;
 
 
 import com.example.springsocial.exception.ResourceNotFoundException;
-import com.example.springsocial.model.Users;
+import com.example.springsocial.model.User;
 import com.example.springsocial.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,20 +25,20 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        Users users = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with email : " + email)
         );
 
-        return UserPrincipal.create(users);
+        return UserPrincipal.create(user);
     }
 
     @Transactional
     public UserDetails loadUserById(Long id) {
-        Users users = userRepository.findById(id).orElseThrow(
+        User user = userRepository.findById(id).orElseThrow(
             () -> new ResourceNotFoundException("User", "id", id)
         );
 
-        return UserPrincipal.create(users);
+        return UserPrincipal.create(user);
     }
 }

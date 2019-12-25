@@ -8,11 +8,11 @@ public class ValidateProjectEmp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String comment ;
+    private String comment;
     @OneToOne
-    private User employee ;
+    private User employee;
 
-    private Boolean validation ;
+    private Boolean validation;
 
     public ValidateProjectEmp() {
     }

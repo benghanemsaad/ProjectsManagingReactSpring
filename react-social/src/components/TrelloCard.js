@@ -4,72 +4,69 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField'; 
 import { Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
 
 
-let styles = {
-    cardContainer: {
-        marginBottom : 8
-    }
-}
+    let  CardContainer = "";
+
 
 let backgroundcolor = "" ; 
 
 const TrelloCard = (props) => {
 
     if(props.comment === "Urgent"){
-        styles = {
-            cardContainer: {
-                marginBottom : 8,
-                backgroundColor : "#f44336"
-            }
-        }
+
+        CardContainer = styled.div`
+            margin-bottom : 8px;
+            background-color : #f44336;
+        `;
     }else if (props.comment ==="Informatif"){
-        styles = {
-            cardContainer: {
-                marginBottom : 8,
-                backgroundColor : "#7e57c2"
-            }
-        }
+        CardContainer = styled.div`
+            margin-bottom : 8px;
+            background-color : #7e57c2;
+        `;
     }else if (props.comment ==="Quotidien"){
 
-        styles = {
-            cardContainer: {
-                marginBottom : 8,
-                backgroundColor : "#2196f3"
-            }
-        }
+        CardContainer = styled.div`
+            margin-bottom : 8px;
+            background-color : #2196f3;
+        `;
+      
     }
     return(
         <Draggable draggableId={String(props.id)} index = {props.index}>
             {provided =>(
                 <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                    <Card style = {styles.cardContainer}>
+                    <CardContainer>
                         <CardContent>
                             <Typography gutterBottom>
-                            {props.text}
+                            Le nom de la tâche : {props.text}
                             </Typography>
 
                             <Typography gutterBottom>
-                            {props.duration}
+                            Durée éstimée : {props.duration}
                             </Typography>
 
                             <Typography gutterBottom>
-                            {props.createdBy}
+                            Crée par : {props.createdBy}
                             </Typography>
 
                         </CardContent>
 
                         <TextField
                             id="datetime-local"
-                            label="Next appointment"
+                            label="Le Délai Final"
                             type="datetime-local"
+                            style={{
+                                margin : 20
+                            }}
                             defaultValue={props.deadlineDateAndhour}
                             InputLabelProps={{
                             shrink: true,
                             }}
                         />
                         
-                    </Card>
+                    </CardContainer>
                 </div>
             )}
             

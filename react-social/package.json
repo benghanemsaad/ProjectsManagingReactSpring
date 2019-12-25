@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "antd": "^3.26.4",
     "install": "^0.12.2",
     "npm": "^6.8.0",
     "react": "^16.8.3",
@@ -12,6 +13,7 @@
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
+    "react-s-alert": "^1.4.1",
     "react-scripts": "2.1.5",
     "react-spring": "^8.0.18",
     "react-textarea-autosize": "^7.1.0",

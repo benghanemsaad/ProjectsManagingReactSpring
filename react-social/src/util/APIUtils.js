@@ -34,23 +34,23 @@ export function getCurrentUser() {
     });
 }
 
-export function moveTask(src,dest,idCard) {
+export function moveTask(src,dest,idCard ,id) {
     
     return request({
-        url: API_BASE_URL + "/api/v1/listeTaches/"+src+"/to/"+dest+"/tache/"+idCard,
+        url: API_BASE_URL + "/api/v1/listeTaches/"+id+"/in/"+src+"/to/"+dest+"/tache/"+idCard,
         method: 'GET'
     });
 }
 
 
 
-export function getAllListTask(){
+export function getAllListTask(id_projet){
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + "/api/v1/listeTaches/getAll",
+        url: API_BASE_URL + "/api/v1/project/"+id_projet+"/alltaskflow",
         method: 'GET'
     });
 }
@@ -63,9 +63,16 @@ export function addTaskToFlow(task , listID){
     });
 }
 
-export function addTaskflow(taskflow){
+export function getAllProjects(){
     return request({
-        url: API_BASE_URL + "/api/v1/listeTaches/add",
+        url: API_BASE_URL + "/api/v1/project/getAll",
+        method: 'GET'
+    });
+}
+
+export function addTaskflow(id_project , taskflow){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/addtaskflow/"+id_project,
         method: 'POST',
         body: JSON.stringify(taskflow)
     });

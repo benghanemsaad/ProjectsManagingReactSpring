@@ -20,7 +20,7 @@ class AppHeader extends Component {
                                             <NavLink to="/profile">Mon Profil</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/myproject">Mon Projet</NavLink>
+                                            <NavLink to="/allprojects">Tout les Projets</NavLink>
                                         </li>
                                         <li>
                                             <a onClick={this.props.onLogout}>Logout</a>

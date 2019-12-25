@@ -16,9 +16,11 @@ import { ACCESS_TOKEN } from '../constants';
 import PrivateRoute from '../common/PrivateRoute';
 import Alert from 'react-s-alert';
 import AppTmp from "../TrelloApp/AppTmp";
+import allproject from "../TrelloApp/AllProject";
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import './App.css';
+import AllProject from '../TrelloApp/AllProject';
 
 
 class App extends Component {
@@ -83,17 +85,24 @@ class App extends Component {
         </div>
         <div className="app-body">
           <Switch>
-            <Route exact path="/" component={Home}></Route>           
+            <Route exact path="/" component={Home}></Route>  
+
             <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={Profile}></PrivateRoute>
 
-            <PrivateRoute path="/myproject" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+            <PrivateRoute path="/allprojects" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={AllProject}></PrivateRoute>
+
+            <PrivateRoute path="/project/:id" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              
               component={AppTmp}></PrivateRoute>
 
             <Route path="/login"
               render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
+
             <Route path="/signup"
               render={(props) => <Signup authenticated={this.state.authenticated} {...props} />}></Route>
+
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route> 
 
            

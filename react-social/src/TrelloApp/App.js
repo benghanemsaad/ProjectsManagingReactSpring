@@ -8,9 +8,13 @@ import { addTaskToFlow } from "../util/APIUtils";
 import { moveTask } from "../util/APIUtils";
 import Alert from 'react-s-alert';
 import { DragDropContext } from "react-beautiful-dnd";
+import styled from "styled-components";
 
-
-
+import  ValidateProject  from "./ValidateProject";
+const ListContainer = styled.div`
+    display : flex;
+    flex-direction : row;
+`;
 
 class App extends Component{
     constructor(props) {
@@ -22,11 +26,12 @@ class App extends Component{
         initialState : []
     }
 
-
     loadList = () => {
         //alert("je suis la!");
-        getAllListTask()
+        getAllListTask(this.props.id)
             .then(response => {
+                console.log("taskflow of project");
+                console.log(response);
             this.setState({
                 initialState: response,
             });
@@ -38,17 +43,15 @@ class App extends Component{
     }
 
     updtateApp = (req) => {
-        console.log("je suis la");
+        //console.log("je suis la");
         this.loadList();
         console.log("after");
         console.log(this.state.initialState);
     }
-
+    
     addTaskflowInReact = (flow) => {
-        addTaskflow(flow)
+        addTaskflow(this.props.id, flow)
         .then(response => {
-            //console.log("bloque ajoute");
-            //console.log(response);
             Alert.success("BLOQUE DE TACHE AJOUTE");
             this.setState({
                 initialState : response//[...this.state.initialState , response]
@@ -70,8 +73,8 @@ class App extends Component{
         
     }
 
-    moveTaskReact = (source , destination , draggableId) =>{
-        moveTask(source , destination , draggableId)
+    moveTaskReact = (source , destination , draggableId ) =>{
+        moveTask(source , destination , draggableId , this.props.id)
         .then(response => {
             Alert.success("TACHE DEPLACEE");
             this.setState({
@@ -82,9 +85,9 @@ class App extends Component{
         })
     }
 
-    componentDidMount(){
-        this.loadList();
-    }
+        componentDidMount(){
+            this.loadList();
+        }
 
 
     onDragEnd = (result) => {
@@ -99,30 +102,48 @@ class App extends Component{
     }
 
 
-    render(){
-        //const { lists , authenticated , currentUser } = this.props;
-        return(
-            <DragDropContext onDragEnd = { this.onDragEnd}>
-            <div className="App">
-                <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
-                <div style={styles.listsContainer}>
-                    { this.state.initialState.map(list => 
-                    <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
-                    )}
-                    <TrelloActionButton list laFonction={this.addTaskflowInReact} />
+
+    affichage = (role) => {
+        if(role ==="Chef"){
+            return (
+                <DragDropContext onDragEnd = { this.onDragEnd}>
+                <div className="App">
+                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
+                    <h1>id of project : <span> {this.props.id} </span></h1>
+                    <ListContainer>
+                        { this.state.initialState.map(list => 
+                        <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
+                        )}
+                        <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
+                    </ListContainer>
+                    <ValidateProject  />
                 </div>
-            </div>
-            </DragDropContext>
-        );
+                </DragDropContext>
+            );
+        }else{
+            return(
+                <DragDropContext onDragEnd = { this.onDragEnd}>
+                <div className="App">
+                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
+                    <h1>id of project : <span> {this.props.id} </span></h1>
+                    <ListContainer>
+                        { this.state.initialState.map(list => 
+                        <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
+                        )}
+                        <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
+                    </ListContainer>
+                </div>
+                </DragDropContext>
+            );
+        }
+        
+    }
+
+    render(){
+        return this.affichage(this.props.currentUser.role);
     }
 }
 
-const styles = {
-    listsContainer : {
-        display : "flex",
-        flexDirection : "row"
-    }
-}
 
 const mapStateToProps = state => ({
     lists : state.lists

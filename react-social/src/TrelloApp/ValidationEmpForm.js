@@ -39,8 +39,8 @@ class ValidationEmpForm extends React.Component {
       this.props.close();
       }else {
         console.log("Validation Form ") ; 
-      e.preventDefault();
-      this.props.validation({
+        e.preventDefault();
+         this.props.validation({
         comment : this.state.comment,
         validation : false
     });

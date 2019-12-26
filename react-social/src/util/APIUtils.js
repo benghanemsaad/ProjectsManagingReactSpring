@@ -42,12 +42,15 @@ export function moveTask(src,dest,idCard ,id) {
     });
 }
 
-export function addValidaion(id_project) {
+export function addValidaion(id_project,validation) {
     
+
     return request({
         url: API_BASE_URL + "/api/v1/project/"+id_project+"/validateproject",
-        method: 'GET'
+        method: 'POST',
+        body: JSON.stringify(validation)
     });
+
 }
 
 

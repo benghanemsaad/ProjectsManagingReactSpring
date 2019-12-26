@@ -10,7 +10,7 @@ import ValidationEmpForm from "./ValidationEmpForm";
 import { Modal, ModalHeader, ModalBody , ModalFooter} from "reactstrap";
 
 
-export default class PopUpValidation extends React.Component{
+class PopUpValidation extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -23,6 +23,7 @@ export default class PopUpValidation extends React.Component{
         this.setState({modal: !this.state.modal});
     }
 
+
     render() {
         return (
             <div>
@@ -31,6 +32,7 @@ export default class PopUpValidation extends React.Component{
                        toggle={this.toggle} >
                     <ModalHeader className="mx-auto modal-header">
                         Ajouter Avis/Validation
+                        {this.props.other}
                     </ModalHeader>
                     <ModalBody className="bg-light">
                         <ValidationEmpForm validation = {this.props.validation } close = {this.toggle }/>
@@ -43,3 +45,5 @@ export default class PopUpValidation extends React.Component{
         );
     }
 }
+
+export default PopUpValidation ;

@@ -117,6 +117,14 @@ class App extends Component{
 
     }
 
+    test = () => {
+        console.log("hi from app");
+    }
+
+
+
+    
+
 
 
     affichage = (role) => {
@@ -132,7 +140,7 @@ class App extends Component{
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
-                    <PopUpValidation validation = { this.addValidationReact} />
+                    <PopUpValidation validation = {this.addValidationReact}  other ={this.props.id}/>
                     <ValidateProject  />
                 </div>
                 </DragDropContext>
@@ -149,7 +157,7 @@ class App extends Component{
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
-                    <PopUpValidation/>
+                    <PopUpValidation validation = {this.addValidationReact} />
                 </div>
                 </DragDropContext>
             );

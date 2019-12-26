@@ -66,7 +66,7 @@ public class ProjetController {
         return projet.getTaskFlows();
     }
 
-    @GetMapping("/{id_projet}/validateproject")
+    @PostMapping("/{id_projet}/validateproject")
     @ResponseBody
     public Collection<ValidateProjectEmp> setNewValidation(@PathVariable Long idProjet, @CurrentUser UserPrincipal userPrincipal ,@RequestBody ValidateProjectEmp validateProjectEmp) {
         User user = getCurrentUser(userPrincipal);

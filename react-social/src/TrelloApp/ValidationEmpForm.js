@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Select, Button,Icon } from 'antd';
 
-
 const { TextArea } = Input;
 
 
@@ -31,24 +30,20 @@ class ValidationEmpForm extends React.Component {
 
   handleSubmit = (e) => {
       if(this.state.validation ==="Valider"){
-        const validation = {
-            comment : this.state.comment,
-            validation : true
-      }
-      console.log("Validation Form ") ; 
-      console.log(validation);
+      
       e.preventDefault();
-      this.props.validation(validation);
+      this.props.validation({
+        comment : this.state.comment,
+        validation : true
+  });
       this.props.close();
       }else {
-        const validation = {
-            comment : this.state.comment,
-            validation : false
-        }
         console.log("Validation Form ") ; 
-      console.log(validation);
       e.preventDefault();
-      this.props.validation(validation);
+      this.props.validation({
+        comment : this.state.comment,
+        validation : false
+    });
       this.props.close();
       }
      

@@ -2,8 +2,10 @@ package com.example.springsocial.controller;
 
 
 import com.example.springsocial.model.Card;
+import com.example.springsocial.model.Projet;
 import com.example.springsocial.model.TaskFlow;
 import com.example.springsocial.repository.CardRepository;
+import com.example.springsocial.repository.ProjetRepository;
 import com.example.springsocial.repository.TaskFlowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class TaskFlowController {
 
     @Autowired
     private CardRepository cardRepository ;
+
+    @Autowired
+    private ProjetRepository projetRepository ;
 
 
     @GetMapping(value = "/getAll")
@@ -69,6 +74,20 @@ public class TaskFlowController {
 
         return (Collection<TaskFlow>) taskFlowRepository.findAll();
 
+    }
+
+    @GetMapping(value = "/{id_project}/in/{id_list_source}/to/{id_list_destination}/tache/{id_tache}")
+    @ResponseBody
+    public Collection<TaskFlow> moveToOtherTaskflow(@PathVariable Long id_project, @PathVariable Long id_list_source, @PathVariable Long id_list_destination, @PathVariable Long id_tache) {
+        TaskFlow taskFlowSource = taskFlowRepository.findById(id_list_source).get();
+        TaskFlow taskFlowDestination = taskFlowRepository.findById(id_list_destination).get();
+        Card card = cardRepository.findById(id_tache).get();
+        taskFlowSource.deleteTask(card);
+        taskFlowDestination.addTask(card);
+        taskFlowRepository.save(taskFlowSource);
+        taskFlowRepository.save(taskFlowDestination);
+        Projet p =  projetRepository.findById(id_project).get() ;
+        return (Collection<TaskFlow>) p.getTaskFlows();
     }
 
 

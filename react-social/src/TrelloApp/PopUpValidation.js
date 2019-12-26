@@ -27,7 +27,12 @@ class PopUpValidation extends React.Component{
     render() {
         return (
             <div>
-                <Button ariant="primary" onClick={ this.toggle}>Exprimez Vous</Button>
+                <div className="ui basic center aligned segment">
+                <button className="ui teal icon left labeled button" ariant="primary" onClick={ this.toggle}>
+                <i aria-hidden="true" className="add icon"></i>
+                    Exprimez Vous
+                    </button>
+                    </div>
                 <Modal isOpen={this.state.modal} fade={false}
                        toggle={this.toggle} >
                     <ModalHeader className="mx-auto modal-header">
@@ -35,7 +40,7 @@ class PopUpValidation extends React.Component{
                         {this.props.other}
                     </ModalHeader>
                     <ModalBody className="bg-light">
-                        <ValidationEmpForm validation = {this.props.validation } close = {this.toggle }/>
+                        <ValidationEmpForm validation = {this.props.validation } close = {this.toggle } />
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={this.toggle}>Cancel</Button>

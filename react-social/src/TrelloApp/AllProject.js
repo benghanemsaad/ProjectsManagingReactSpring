@@ -1,6 +1,7 @@
 import React from 'react';
 import { getAllProjects } from "../util/APIUtils";
 import ProjectCard from './ProjectCard';
+import { Header} from 'semantic-ui-react';
 
 
 
@@ -33,9 +34,11 @@ export default class AllProject extends React.Component{
     render(){
         return(
             <div>
-            <h1>All Projects</h1>
+            <Header as='h3' block>
+                All Projects
+            </Header>
             {this.state.projects.map(
-                project => <ProjectCard createdBy = {project.createdBy} description = {project.description} id = {project.id} budget= {project.budget} duree= {project.duree} />
+                project => <ProjectCard emps={project} createdBy = {project.createdBy} description = {project.description} id = {project.id} budget= {project.budget} duree= {project.duree} />
                 )}
             </div>
         );

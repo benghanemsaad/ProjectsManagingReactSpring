@@ -9,10 +9,13 @@ import { moveTask , addValidaion } from "../util/APIUtils";
 import Alert from 'react-s-alert';
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { Header, Icon, Image } from 'semantic-ui-react';
 
 import Demo from './ValidationEmpForm';
 
 import PopUpValidation from './PopUpValidation';
+import ListOfValidation from './ListOfValidation';
+import { getAllValidation} from "../util/APIUtils";
 
 
 
@@ -29,7 +32,8 @@ class App extends Component{
     }
 
     state = {
-        initialState : []
+        initialState : [],
+        posts : [],
     }
 
     loadList = () => {
@@ -46,6 +50,19 @@ class App extends Component{
                 loading: false
             });  
             }); 
+    }
+
+    loadValidation = () => {
+        getAllValidation(this.props.id)
+        .then(response => {
+            console.log("loaded");
+            console.log(response);
+            this.setState({
+                posts : response,
+            });
+        }).catch(error => {
+
+        });
     }
 
     updtateApp = (req) => {
@@ -95,14 +112,20 @@ class App extends Component{
         addValidaion(this.props.id , validation)
         .then(response => {
             Alert.success("Validation Ajouter");
+            this.setState({
+                posts : response
+            })
       
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
         })
+
+        
     }
 
-        componentDidMount(){
+        componentWillMount(){
             this.loadList();
+            this.loadValidation();
         }
 
 
@@ -112,34 +135,39 @@ class App extends Component{
             return ; 
         }
         this.moveTaskReact(source.droppableId , destination.droppableId , draggableId);
-        //this.loadList();
-
 
     }
-
-    test = () => {
-        console.log("hi from app");
-    }
-
-
-
     
-
-
-
     affichage = (role) => {
         if(role ==="Chef"){
             return (
                 <DragDropContext onDragEnd = { this.onDragEnd}>
                 <div className="App">
-                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
+
                     <h1>id of project : <span> {this.props.id} </span></h1>
+                    <Header as='h2'>
+                        <Image circular src='https://react.semantic-ui.com/images/avatar/large/patrick.png' /> {this.props.currentUser.name}
+                    </Header>
+
+                    <Header as='h3' block>
+                            id of project : <span> {this.props.id} </span>
+                    </Header>
+
                     <ListContainer>
                         { this.state.initialState.map(list => 
                         <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
+                    
+                            <Header as='h2' icon textAlign='center'>
+                            <Icon name='users' circular />
+                            <Header.Content>Collegues</Header.Content>
+                            </Header>
+                            
+                    <div style={{marginLeft : 40}}>
+                        <ListOfValidation validations={this.state.posts} projectId = {this.props.id}/>
+                        </div>
                     <PopUpValidation validation = {this.addValidationReact}  other ={this.props.id}/>
                     <ValidateProject  />
                 </div>
@@ -149,15 +177,29 @@ class App extends Component{
             return(
                 <DragDropContext onDragEnd = { this.onDragEnd}>
                 <div className="App">
-                    <h2>Your Project Mr : <span>{this.props.currentUser.name}</span></h2>
-                    <h1>id of project : <span> {this.props.id} </span></h1>
+                    <Header as='h2'>
+                        <Image circular src='https://react.semantic-ui.com/images/avatar/large/patrick.png' /> {this.props.currentUser.name}
+                    </Header>
+                    
+                    <Header as='h3' block>
+                            id of project : <span> {this.props.id} </span>
+                    </Header>
+
                     <ListContainer>
                         { this.state.initialState.map(list => 
                         <TrelloList listID = {list.id} key={list.id} title = { list.title } cards = { list.cards }  loadList={this.loadList} email = {this.props.currentUser.email} laFonction2 = {this.addTaskToFlowInReact}/>
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
-                    <PopUpValidation validation = {this.addValidationReact} />
+                    <Header as='h2' icon textAlign='center'>
+                            <Icon name='users' circular />
+                            <Header.Content>Collegues</Header.Content>
+                    </Header>
+                    <div style={{marginLeft : 80}}>
+                        <ListOfValidation validations= {this.state.posts}  projectId = {this.props.id}/>
+                    </div>
+                    <div className="ui horizontal divider">Ajoutez Avis</div>
+                    <PopUpValidation validation = {this.addValidationReact} load={this.loadValidation} />
                 </div>
                 </DragDropContext>
             );

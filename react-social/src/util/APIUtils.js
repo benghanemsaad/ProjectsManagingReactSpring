@@ -43,7 +43,6 @@ export function moveTask(src,dest,idCard ,id) {
 }
 
 export function addValidaion(id_project,validation) {
-    
 
     return request({
         url: API_BASE_URL + "/api/v1/project/"+id_project+"/validateproject",
@@ -51,6 +50,13 @@ export function addValidaion(id_project,validation) {
         body: JSON.stringify(validation)
     });
 
+}
+
+export function getAllValidation(id_project){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/"+id_project+"/allvalidation",
+        method: 'GET'
+    });
 }
 
 

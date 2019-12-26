@@ -37,6 +37,7 @@ class ValidationEmpForm extends React.Component {
         validation : true
   });
       this.props.close();
+    
       }else {
         console.log("Validation Form ") ; 
         e.preventDefault();
@@ -45,6 +46,7 @@ class ValidationEmpForm extends React.Component {
         validation : false
     });
       this.props.close();
+      
       }
      
   }

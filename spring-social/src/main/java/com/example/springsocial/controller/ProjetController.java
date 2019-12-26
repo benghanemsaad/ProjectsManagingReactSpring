@@ -35,6 +35,7 @@ public class ProjetController {
         return (Collection<Projet>) projetRepository.findAll();
     }
 
+
     //@PostMapping(value = "/{idProjet}/addtaskflow")
     @PostMapping(value = "/addtaskflow/{idProjet}")
     @ResponseBody
@@ -66,7 +67,7 @@ public class ProjetController {
         return projet.getTaskFlows();
     }
 
-    @PostMapping("/{id_projet}/validateproject")
+    @PostMapping("/{idProjet}/validateproject")
     @ResponseBody
     public Collection<ValidateProjectEmp> setNewValidation(@PathVariable Long idProjet, @CurrentUser UserPrincipal userPrincipal ,@RequestBody ValidateProjectEmp validateProjectEmp) {
         User user = getCurrentUser(userPrincipal);

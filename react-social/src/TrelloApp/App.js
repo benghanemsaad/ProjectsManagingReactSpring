@@ -5,10 +5,16 @@ import TrelloActionButton from "../components/TrelloActionButton";
 import { getAllListTask } from '../util/APIUtils';
 import { addTaskflow } from '../util/APIUtils';
 import { addTaskToFlow } from "../util/APIUtils";
-import { moveTask } from "../util/APIUtils";
+import { moveTask , addValidaion } from "../util/APIUtils";
 import Alert from 'react-s-alert';
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
+
+import Demo from './ValidationEmpForm';
+
+import PopUpValidation from './PopUpValidation';
+
+
 
 import  ValidateProject  from "./ValidateProject";
 const ListContainer = styled.div`
@@ -85,6 +91,16 @@ class App extends Component{
         })
     }
 
+    addValidationReact = (validation) => {
+        addValidaion(this.props.id , validation)
+        .then(response => {
+            Alert.success("Validation Ajouter");
+      
+        }).catch(error => {
+            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+        })
+    }
+
         componentDidMount(){
             this.loadList();
         }
@@ -116,6 +132,7 @@ class App extends Component{
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
+                    <PopUpValidation validation = { this.addValidationReact} />
                     <ValidateProject  />
                 </div>
                 </DragDropContext>
@@ -132,6 +149,7 @@ class App extends Component{
                         )}
                         <TrelloActionButton list laFonction={this.addTaskflowInReact} idProjet = {this.props.id} />
                     </ListContainer>
+                    <PopUpValidation/>
                 </div>
                 </DragDropContext>
             );

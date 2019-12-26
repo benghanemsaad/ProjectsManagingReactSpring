@@ -23,6 +23,11 @@ public class ValidateProjectEmp {
         this.validation = validation;
     }
 
+    public ValidateProjectEmp(String comment, Boolean validation) {
+        this.comment = comment;
+        this.validation = validation;
+    }
+
     public String getComment() {
         return comment;
     }

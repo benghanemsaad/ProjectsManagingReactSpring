@@ -6,6 +6,8 @@ import com.example.springsocial.repository.ProjetRepository;
 import com.example.springsocial.repository.TaskFlowRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.repository.ValidateProjectEmpRepository;
+import com.example.springsocial.security.CurrentUser;
+import com.example.springsocial.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,14 +68,18 @@ public class ProjetController {
 
     @GetMapping("/{id_projet}/validateproject")
     @ResponseBody
-    public void setNewValidation(@PathVariable Long idProjet, @RequestParam(value = "comment") String comment, @RequestParam(value = "comment") Long idUser, @RequestParam(value = "comment") boolean validation) {
-        User user = userRepository.findById(idUser).orElseThrow(() -> new ResourceNotFoundException("User", "id", idUser));
-        ValidateProjectEmp validateProjectEmp = new ValidateProjectEmp(comment, user, validation);
-        //validateProjectEmpRepository.save(validateProjectEmp);
+    public Collection<ValidateProjectEmp> setNewValidation(@PathVariable Long idProjet, @CurrentUser UserPrincipal userPrincipal ,@RequestBody ValidateProjectEmp validateProjectEmp) {
+        User user = getCurrentUser(userPrincipal);
+        validateProjectEmp.setEmployee(user);
         validateProjectEmpRepository.save(validateProjectEmp);
         Projet projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
-        //projet.addValidateProjectEmp(validateProjectEmpRepository.save(validateProjectEmp));
         projet.addValidateProjectEmp(validateProjectEmp);
         projetRepository.save(projet);
+        return projet.getValidations();
+    }
+
+    public User getCurrentUser(UserPrincipal userPrincipal) {
+        return userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 }

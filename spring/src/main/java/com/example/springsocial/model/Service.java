@@ -19,6 +19,17 @@ public class Service {
     @OneToOne
     private User chefService ;
 
+    @OneToMany
+    private Collection<Projet> projets ;
+
+    public Collection<Projet> getProjets() {
+        return projets;
+    }
+
+    public void setProjets(Collection<Projet> projets) {
+        this.projets = projets;
+    }
+
     public Service(String name) {
         this.name = name;
     }

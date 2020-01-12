@@ -195,7 +195,6 @@ class TrelloActionButton extends React.Component {
                             InputLabelProps={{
                             shrink: true,
                             }}
-                            onBlur={this.closeForm}
                             style = {style.textfield}
                             value = {this.state.deadline}
                             onChange = {this.handleInputChangeDeadline}

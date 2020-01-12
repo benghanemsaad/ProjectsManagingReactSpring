@@ -43,6 +43,33 @@ public class ProjetController {
         return projetRepository.findById(id).get();
     }
 
+    @GetMapping(value = "/valideProject/{id}")
+    @ResponseBody
+    public String valideProject(@PathVariable Long id) {
+
+        Projet p = projetRepository.findById(id).get();
+        int favorable = 0 ;
+        int defavorable = 0;
+        for (ValidateProjectEmp tmp  : p.getValidations()
+        ) {
+            if(tmp.getValidation())
+            {
+                ++favorable ;
+            }else{
+                ++defavorable ;
+            }
+        }
+
+        if(favorable > defavorable){
+            p.setValide(true);
+            projetRepository.save(p) ;
+            return "OK";
+        }else{
+            return "KO";
+        }
+
+    }
+
 
     //@PostMapping(value = "/{idProjet}/addtaskflow")
     @PostMapping(value = "/addtaskflow/{idProjet}")

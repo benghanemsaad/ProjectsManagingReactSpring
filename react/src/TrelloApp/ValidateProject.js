@@ -1,7 +1,12 @@
-import { Steps, Button, message } from 'antd';
+import { Steps, Button, message, Alert } from 'antd';
 import React from 'react';
 import ProjectCardInValidation from './ProjectCardInValidation';
 import { getProjectById } from "../util/APIUtils";
+import { valideProject } from "../util/APIUtils";
+
+import ChartOfVote from './ChartOfVote';
+
+import FinalContent from './FinalContent';
 
 
 const { Step } = Steps;
@@ -23,16 +28,19 @@ class ValidateProject extends React.Component {
       ]
   }
 }
+
+nbrFavorable = 0 ;
+nbrDiFavorable = 0 ; 
   
 
 
   loadProjectInformations = () =>  {
     getProjectById(this.props.projectId)
         .then(response =>{
-                console.log("our response "  + response);
                 this.setState({
                     currentProject : response,
                 });
+                this.countValidation();
                 this.setState({ steps  : 
                   [
                   {
@@ -40,15 +48,16 @@ class ValidateProject extends React.Component {
                     content: <ProjectCardInValidation emps={this.state.currentProject} createdBy = {this.state.currentProject.createdBy} description = {this.state.currentProject.description} id = {this.state.currentProject.id} budget= {this.state.currentProject.budget} duree= {this.state.currentProject.duree} />,
                   },
                   {
-                    title: 'Second',
-                    content: 'Second-content',
+                    title: 'Statistiques',
+                    content: <ChartOfVote fav={this.nbrFavorable} difav = {this.nbrDiFavorable}/>,
                   },
                   {
-                    title: 'Last',
-                    content: 'Last-content',
+                    title: 'Confirmation',
+                    content: <FinalContent fav={this.nbrFavorable} difav = {this.nbrDiFavorable}/>,
                   },
                 ]
               });
+              
         }  
         ).catch(error => {
             //Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
@@ -56,12 +65,24 @@ class ValidateProject extends React.Component {
 
   }
 
+ 
+
       componentDidMount(){
         this.loadProjectInformations();
-        
-        /**/
-      
-  }
+      }
+
+      countValidation =  () => {
+        this.state.currentProject.validations.map(
+          validation => {
+            if(validation.validation){
+              this.nbrFavorable++ ;
+            }else{
+              this.nbrDiFavorable++;
+            }
+          }
+       
+      )
+      }
 
   updateProjectInsideCard = () => {
     
@@ -96,7 +117,21 @@ class ValidateProject extends React.Component {
             </Button>
           )}
           {current === this.state.steps.length - 1 && (
-            <Button type="primary" onClick={() => message.success('Processing complete!')}>
+            <Button type="primary" onClick={() => {
+              message.success('Processing complete!');
+              valideProject(this.state.currentProject.id).then(response =>{
+                console.log("Return from validate Project + " + response);
+                if(response === "OK"){
+                  Alert.success("Projet Validée");
+                }else{
+                  Alert.error("Les Collaborateurs ont voté de ne pas valider le projet");
+                }
+        }  
+        ).catch(error => {
+            //Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+        })
+
+            } }>
               Done
             </Button>
           )}

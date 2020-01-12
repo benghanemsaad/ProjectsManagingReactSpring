@@ -65,6 +65,12 @@ export function getProjectById(id_project){
     });
 }
 
+export function valideProject(id_project){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/valideProject/"+id_project,
+        method: 'GET'
+    });
+}
 
 
 export function getAllListTask(id_projet){

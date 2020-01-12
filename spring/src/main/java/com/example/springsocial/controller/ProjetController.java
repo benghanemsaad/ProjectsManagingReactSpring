@@ -36,15 +36,23 @@ public class ProjetController {
     }
 
 
+
+    @GetMapping(value = "/get/{id}")
+    @ResponseBody
+    public Projet getById(@PathVariable Long id) {
+        return projetRepository.findById(id).get();
+    }
+
+
     //@PostMapping(value = "/{idProjet}/addtaskflow")
     @PostMapping(value = "/addtaskflow/{idProjet}")
     @ResponseBody
-    public Projet addTaskFlow(@PathVariable Long idProjet, @RequestBody TaskFlow taskFlow) {
+    public Collection<TaskFlow> addTaskFlow(@PathVariable Long idProjet, @RequestBody TaskFlow taskFlow) {
         taskFlowRepository.save(taskFlow);
         Projet projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
         projet.addTaskFlow(taskFlow);
         projetRepository.save(projet);
-        return (projet);
+       return projet.getTaskFlows() ;
     }
 
     @PostMapping(value = "/add")
@@ -71,11 +79,25 @@ public class ProjetController {
     @ResponseBody
     public Collection<ValidateProjectEmp> setNewValidation(@PathVariable Long idProjet, @CurrentUser UserPrincipal userPrincipal ,@RequestBody ValidateProjectEmp validateProjectEmp) {
         User user = getCurrentUser(userPrincipal);
-        validateProjectEmp.setEmployee(user);
-        validateProjectEmpRepository.save(validateProjectEmp);
-        Projet projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
-        projet.addValidateProjectEmp(validateProjectEmp);
-        projetRepository.save(projet);
+        Projet projet = projetRepository.findById(idProjet).get() ;
+        boolean find = false ;
+
+        for (ValidateProjectEmp tmp  : projet.getValidations()
+             ) {
+            if(tmp.getEmployee().getId().equals(userPrincipal.getId()))
+            {
+                find = true ;
+            }
+        }
+
+        if(!find) {
+            validateProjectEmp.setEmployee(user);
+            validateProjectEmpRepository.save(validateProjectEmp);
+            projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
+            projet.addValidateProjectEmp(validateProjectEmp);
+            projetRepository.save(projet);
+        }
+
         return projet.getValidations();
     }
 

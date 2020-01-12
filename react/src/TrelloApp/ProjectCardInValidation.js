@@ -54,13 +54,7 @@ const ProjectCard = (props) => {
                 
                 </Typography>
             </CardContent>
-            <CardActions>
-            <Link to={link} >
-                <Button type="button" variant="contained" color="primary" >
-                    Explorer 
-                </Button>
-            </Link>
-            </CardActions>
+           
     </Card>
     );
 }

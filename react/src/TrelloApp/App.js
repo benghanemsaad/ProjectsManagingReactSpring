@@ -111,10 +111,16 @@ class App extends Component{
     addValidationReact = (validation) => {
         addValidaion(this.props.id , validation)
         .then(response => {
-            Alert.success("Validation Ajouter");
-            this.setState({
-                posts : response
-            })
+            if(JSON.stringify(response) === JSON.stringify(this.state.posts) ){
+
+                Alert.error("Deja Ajouté");
+            }else{
+                Alert.success("Validation Ajouter");
+                this.setState({
+                    posts : response
+                })
+            }
+           
       
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
@@ -139,7 +145,7 @@ class App extends Component{
     }
     
     affichage = (role) => {
-        if(role ==="Chef"){
+        if(role === "Chef"){
             return (
                 <DragDropContext onDragEnd = { this.onDragEnd}>
                 <div className="App">
@@ -169,7 +175,7 @@ class App extends Component{
                         <ListOfValidation validations={this.state.posts} projectId = {this.props.id}/>
                         </div>
                     <PopUpValidation validation = {this.addValidationReact}  other ={this.props.id}/>
-                    <ValidateProject  />
+                    <ValidateProject projectId = {this.props.id} />
                 </div>
                 </DragDropContext>
             );
@@ -208,6 +214,7 @@ class App extends Component{
     }
 
     render(){
+        console.log("le Role est : " + this.props.currentUser);
         return this.affichage(this.props.currentUser.role);
     }
 }

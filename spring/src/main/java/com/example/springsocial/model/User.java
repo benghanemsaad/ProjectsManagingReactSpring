@@ -35,6 +35,16 @@ public class User {
 
     private String providerId;
 
+    private String role ;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }

@@ -28,6 +28,16 @@ public class Projet {
 
     private String objectif;
 
+    private boolean valide ;
+
+    public boolean isValide() {
+        return valide;
+    }
+
+    public void setValide(boolean valide) {
+        this.valide = valide;
+    }
+
     @OneToMany
     private Collection<ValidateProjectEmp> validations;
 
@@ -42,6 +52,7 @@ public class Projet {
         this.duree = duree;
         this.objectif = objectif;
         this.createdBy = createdBy;
+        this.valide = false ;
     }
 
     public Projet(float budget, String createdBy, String description, String duree, String objectif) {
@@ -50,6 +61,7 @@ public class Projet {
         this.duree = duree;
         this.objectif = objectif;
         this.createdBy = createdBy;
+        this.valide = false ;
     }
 
 

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -24,6 +26,11 @@ public class UserController {
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+    }
+
+    @GetMapping("/all")
+    public Collection<User> getAllUsers(){
+        return userRepository.findAll();
     }
 
 

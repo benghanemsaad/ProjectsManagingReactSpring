@@ -1,0 +1,35 @@
+import React, { Component } from 'react';
+import { Tabs, Radio } from 'antd';
+import UserList from './UserList';
+
+const { TabPane } = Tabs;
+
+class AdminContent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mode: 'top',
+    };
+  }
+  render() {
+    
+    return (
+      <div>
+        
+        <Tabs defaultActiveKey="1" >
+            <TabPane tab="Les Utilisateurs" key="1">
+                <UserList/>
+            </TabPane>
+            <TabPane tab="Les Projets" key="2">
+            Tab 2
+            </TabPane>
+            <TabPane tab="Les Services" key="3">
+            Tab 3
+            </TabPane>
+        </Tabs>
+      </div>
+    );
+  }
+}
+
+export default AdminContent ;

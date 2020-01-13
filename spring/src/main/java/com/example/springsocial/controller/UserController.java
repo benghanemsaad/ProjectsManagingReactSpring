@@ -34,4 +34,18 @@ public class UserController {
     }
 
 
+
+
+    /*
+    @PostMapping(value = "/add")
+    @ResponseBody
+    public User addTaskFlow(@PathVariable Long idProjet, @RequestBody User user) {
+        taskFlowRepository.save(taskFlow);
+        Projet projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
+        projet.addTaskFlow(taskFlow);
+        projetRepository.save(projet);
+        return projet.getTaskFlows() ;
+    }*/
+
+
 }

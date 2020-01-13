@@ -58,6 +58,13 @@ export function getAllValidation(id_project){
     });
 }
 
+export function getAllUsers(){
+    return request({
+        url: API_BASE_URL + "/api/v1/user/all",
+        method: 'GET'
+    });
+}
+
 export function getProjectById(id_project){
     return request({
         url: API_BASE_URL + "/api/v1/project/get/"+id_project,

@@ -1,5 +1,21 @@
 ![App Screenshot](screenshot.png)
-,screenshot2.png,screenshot3.png,screenshot4.png,screenshot5.png,screenshot6.png,screenshot7.png,screenshot8.png,screenshot9.png,screenshot10.png,screenshot11.png,screenshot12.png,screenshot13.png,screenshot14.png,screenshot15.png,screenshot16.png,screenshot17.png)
+![App Screenshot](screenshot2.png)
+![App Screenshot](screenshot3.png)
+![App Screenshot](screenshot4.png)
+![App Screenshot](screenshot5.png)
+![App Screenshot](screenshot6.png)
+![App Screenshot](screenshot7.png)
+![App Screenshot](screenshot8.png)
+![App Screenshot](screenshot9.png)
+![App Screenshot](screenshot10.png)
+![App Screenshot](screenshot11.png)
+![App Screenshot](screenshot12.png)
+![App Screenshot](screenshot13.png)
+![App Screenshot](screenshot14.png)
+![App Screenshot](screenshot15.png)
+![App Screenshot](screenshot16.png)
+![App Screenshot](screenshot17.png)
+
 
 ## Setting up the Backend Server (spring-social)
 

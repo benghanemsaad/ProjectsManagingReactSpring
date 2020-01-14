@@ -29,11 +29,12 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @NotNull
+
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
     private String providerId;
+
 
     private String role ;
 

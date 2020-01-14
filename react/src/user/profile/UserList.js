@@ -2,13 +2,26 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getAllUsers } from "../../util/APIUtils";
+import { addUser } from "../../util/APIUtils";
+import Alert from 'react-s-alert';
+
+import { Modal, ModalHeader, ModalBody , ModalFooter} from "reactstrap";
+import AddUserForm from './AddUserForm';
 
 
 class UserList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {users: []};
+        this.state = {users: [],
+        modal : false
+    };
+
+    this.toggle = this.toggle.bind(this);
+    }
+
+    toggle() {
+        this.setState({modal: !this.state.modal});
     }
 
     componentDidMount() {
@@ -26,13 +39,39 @@ class UserList extends Component {
     }
 
 
+    addUserReact = (user) => {
+        addUser(user)
+        .then(response => {
+                Alert.success("User Ajouter");
+                this.setState({
+                    users : response
+                })
+            }
+        ).catch(error => {
+            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+        })   
+    }
+    
     render() {
         
         return (
             <div>
                 <Container fluid>
                     <div className="float-right">
-                        <Button color="success" tag={Link} to="/users/new">Add User</Button>
+                        <Button color="success"  onClick={ this.toggle}>Add User</Button>
+                        <Modal isOpen={this.state.modal} fade={false}
+                            toggle={this.toggle} >
+                            <ModalHeader className="mx-auto modal-header">
+                                Ajouter Utilisateur
+                                {this.props.other}
+                            </ModalHeader>
+                            <ModalBody className="bg-light">
+                                <AddUserForm addUser = {this.addUserReact } close = {this.toggle } />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={this.toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
                     </div>
                     <h3>Users</h3>
                     <Table className="mt-4">
@@ -52,7 +91,7 @@ class UserList extends Component {
 
                                         <td>
                                             <ButtonGroup>
-                                                <Button size="sm" color="primary" tag={Link} to={"/users/" + user.id}>Edit</Button>
+                                                <Button size="sm" color="primary" >Edit</Button>
                                                 <Button size="sm" color="danger" onClick={() => this.remove(user.id)}>Delete</Button>
                                             </ButtonGroup>
                                         </td>

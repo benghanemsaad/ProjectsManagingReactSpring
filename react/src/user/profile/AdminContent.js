@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Radio } from 'antd';
 import UserList from './UserList';
+import ServiceList from './ServiceList';
 
 const { TabPane } = Tabs;
 
@@ -20,11 +21,11 @@ class AdminContent extends React.Component {
             <TabPane tab="Les Utilisateurs" key="1">
                 <UserList/>
             </TabPane>
-            <TabPane tab="Les Projets" key="2">
-            Tab 2
+            <TabPane tab="Statistiques Sur Les Projets" key="2">
+                
             </TabPane>
             <TabPane tab="Les Services" key="3">
-            Tab 3
+            <ServiceList />
             </TabPane>
         </Tabs>
       </div>

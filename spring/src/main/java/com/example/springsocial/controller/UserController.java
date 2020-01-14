@@ -1,6 +1,8 @@
 package com.example.springsocial.controller;
 
+import com.example.springsocial.exception.BadRequestException;
 import com.example.springsocial.exception.ResourceNotFoundException;
+import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.User;
 import com.example.springsocial.model.ValidateProjectEmp;
 import com.example.springsocial.repository.ProjetRepository;
@@ -10,6 +12,7 @@ import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -20,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
@@ -33,19 +39,28 @@ public class UserController {
         return userRepository.findAll();
     }
 
-
-
-
-    /*
     @PostMapping(value = "/add")
     @ResponseBody
-    public User addTaskFlow(@PathVariable Long idProjet, @RequestBody User user) {
-        taskFlowRepository.save(taskFlow);
-        Projet projet = projetRepository.findById(idProjet).orElseThrow(() -> new ResourceNotFoundException("Projet", "id", idProjet));
-        projet.addTaskFlow(taskFlow);
-        projetRepository.save(projet);
-        return projet.getTaskFlows() ;
-    }*/
+    public Collection<User> addUser(@RequestBody User user) {
+/*
+        if(userRepository.existsByEmail(user.getEmail())) {
+            throw new BadRequestException("Email address already in use.");
+        }
+        // Creating user's account
+        User userTmp = new User();
+        userTmp.setName(user.getName());
+        userTmp.setEmail(user.getEmail());
+        userTmp.setPassword(user.getPassword());
+        userTmp.setProvider(AuthProvider.local);
+        userTmp.setRole(user.getRole());
+
+        userTmp.setPassword(passwordEncoder.encode(user.getPassword()));*/
+
+        //password in json => null
+
+        userRepository.save(user);
+        return  userRepository.findAll();
+    }
 
 
 }

@@ -51,9 +51,26 @@ export function addValidaion(id_project,validation) {
 
 }
 
+export function addUser(user) {
+    return request({
+        url: API_BASE_URL + "/api/v1/user/add",
+        method: 'POST',
+        body: JSON.stringify(user)
+    });
+
+}
+
+
 export function getAllValidation(id_project){
     return request({
         url: API_BASE_URL + "/api/v1/project/"+id_project+"/allvalidation",
+        method: 'GET'
+    });
+}
+
+export function getAllServices(){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/getAll",
         method: 'GET'
     });
 }

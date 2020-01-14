@@ -13,7 +13,6 @@ public class Service {
 
     private String name ;
 
-
     @OneToMany
     private Collection<User> employee ;
     @OneToOne
@@ -28,6 +27,9 @@ public class Service {
 
     public void setProjets(Collection<Projet> projets) {
         this.projets = projets;
+    }
+
+    public Service() {
     }
 
     public Service(String name) {

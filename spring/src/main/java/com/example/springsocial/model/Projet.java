@@ -30,6 +30,16 @@ public class Projet {
 
     private boolean valide ;
 
+    private boolean approuved ;
+
+    public boolean isApprouved() {
+        return approuved;
+    }
+
+    public void setApprouved(boolean approuved) {
+        this.approuved = approuved;
+    }
+
     public boolean isValide() {
         return valide;
     }
@@ -53,6 +63,8 @@ public class Projet {
         this.objectif = objectif;
         this.createdBy = createdBy;
         this.valide = false ;
+        this.approuved = false ;
+
     }
 
     public Projet(float budget, String createdBy, String description, String duree, String objectif) {
@@ -62,6 +74,7 @@ public class Projet {
         this.objectif = objectif;
         this.createdBy = createdBy;
         this.valide = false ;
+        this.approuved = false ;
     }
 
 

@@ -1,6 +1,5 @@
-# Spring Boot React OAuth2 Social Login Demo
 
-![App Screenshot](screenshot.png)
+![App Screenshot](screenshot.png,screenshot2.png,screenshot3.png,screenshot4.png,screenshot5.png,screenshot6.png,screenshot7.png,screenshot8.png,screenshot9.png,screenshot10.png,screenshot11.png,screenshot12.png,screenshot13.png,screenshot14.png,screenshot15.png,screenshot16.png,screenshot17.png)
 
 ## Setting up the Backend Server (spring-social)
 
@@ -21,46 +20,6 @@
 	        password: <YOUR_DB_PASSWORD>
 	```
 
-+ **Specify OAuth2 Provider ClientId's and ClientSecrets**
-	
-	> This is optional if you're testing the app in localhost. A demo clientId and clientSecret is already specified.
-
-	```yml
-    security:
-      oauth2:
-        client:
-          registration:
-            google:
-              clientId: <GOOGLE_CLIENT_ID>
-              clientSecret: <GOOGLE_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - profile
-            facebook:
-              clientId: <FACEBOOK_CLIENT_ID>
-              clientSecret: <FACEBOOK_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - public_profile
-            github:
-              clientId: <GITHUB_CLIENT_ID>
-              clientSecret: <GITHUB_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - user:email
-                - read:user
-          provider:
-            facebook:
-              authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
-              tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
-              userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
-	```
-
-	*Please make sure that `http://localhost:8080/oauth2/callback/<provider>`* is added as an authorized redirect uri in the OAuth2 provider. For example, In your [Google API console](https://console.developers.google.com/projectselector/apis/credentials?pli=1), make sure that `http://localhost:8080/oauth2/callback/google` is added in the **Authorized redirect URIs**
-
-	*Also, make sure that the above mentioned scopes are added in the OAuth2 provider console.*	For example, scope `email` and `profile` should be added in your Google project's OAuth2 consent screen.
 
 + **Run spring**
 

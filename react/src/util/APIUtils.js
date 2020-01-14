@@ -60,6 +60,32 @@ export function addUser(user) {
 
 }
 
+export function addService(service) {
+    return request({
+        url: API_BASE_URL + "/api/v1/service/add",
+        method: 'POST',
+        body: JSON.stringify(service)
+    });
+}
+
+export function updateUser(user , id_user) {
+    return request({
+        url: API_BASE_URL + "/api/v1/user/update/"+id_user,
+        method: 'PUT',
+        body: JSON.stringify(user)
+    });
+
+}
+
+export function updateMyProfile(user , id_user) {
+    return request({
+        url: API_BASE_URL + "/api/v1/user/updateMyProfile/"+id_user,
+        method: 'PUT',
+        body: JSON.stringify(user)
+    });
+
+}
+
 
 export function getAllValidation(id_project){
     return request({
@@ -75,6 +101,20 @@ export function getAllServices(){
     });
 }
 
+export function affecteChefAuService(idUser , idService){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/"+idService+"/affecteChef/"+idUser,
+        method: 'GET'
+    });
+}
+
+export function desaffecteChefAuService(idService){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/"+idService+"/desaffecteChef",
+        method: 'GET'
+    });
+}
+
 export function getAllUsers(){
     return request({
         url: API_BASE_URL + "/api/v1/user/all",
@@ -82,9 +122,38 @@ export function getAllUsers(){
     });
 }
 
+export function getAllUsersWithoutService(){
+    return request({
+        url: API_BASE_URL + "/api/v1/user/notAffected",
+        method: 'GET'
+    });
+}
+
+export function getAllChefsWithoutService(){
+    return request({
+        url: API_BASE_URL + "/api/v1/user/chefNotAffected",
+        method: 'GET'
+    });
+}
+
+export function getAllUsersInService(serviceId){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/"+serviceId+"/getEmp",
+        method: 'GET'
+    });
+}
+
+
 export function getProjectById(id_project){
     return request({
         url: API_BASE_URL + "/api/v1/project/get/"+id_project,
+        method: 'GET'
+    });
+}
+
+export function getUserById(idUser){
+    return request({
+        url: API_BASE_URL + "/api/v1/user/get/"+idUser,
         method: 'GET'
     });
 }
@@ -116,9 +185,46 @@ export function addTaskToFlow(task , listID){
     });
 }
 
-export function getAllProjects(){
+export function addUserToService(idService , idUser){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/"+idService+"/addEmp/"+idUser,
+        method: 'GET'
+    });
+}
+
+export function deleteUserFromService(idService , idUser){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/"+idService+"/deleteEmp/"+idUser,
+        method: 'GET'
+    });
+}
+
+export function getAllProjectsAdmin(){
     return request({
         url: API_BASE_URL + "/api/v1/project/getAll",
+        method: 'GET'
+    });
+}
+
+export function approuveProject(idProject){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/"+idProject+"/approuved",
+        method: 'GET'
+    });
+}
+
+export function desapprouveProject(idProject){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/"+idProject+"/desapprouved",
+        method: 'GET'
+    });
+}
+
+
+
+export function getAllProjects(){
+    return request({
+        url: API_BASE_URL + "/api/v1/service/getProjects",
         method: 'GET'
     });
 }
@@ -128,6 +234,15 @@ export function addTaskflow(id_project , taskflow){
         url: API_BASE_URL + "/api/v1/project/addtaskflow/"+id_project,
         method: 'POST',
         body: JSON.stringify(taskflow)
+    });
+}
+
+
+export function addNewProject(project){
+    return request({
+        url: API_BASE_URL + "/api/v1/project/add",
+        method: 'POST',
+        body: JSON.stringify(project)
     });
 }
 

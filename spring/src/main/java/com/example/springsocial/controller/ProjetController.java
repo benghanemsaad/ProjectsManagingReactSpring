@@ -2,10 +2,7 @@ package com.example.springsocial.controller;
 
 import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.*;
-import com.example.springsocial.repository.ProjetRepository;
-import com.example.springsocial.repository.TaskFlowRepository;
-import com.example.springsocial.repository.UserRepository;
-import com.example.springsocial.repository.ValidateProjectEmpRepository;
+import com.example.springsocial.repository.*;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,10 @@ public class ProjetController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
 
     @Autowired
     private ValidateProjectEmpRepository validateProjectEmpRepository;
@@ -70,8 +71,6 @@ public class ProjetController {
 
     }
 
-
-    //@PostMapping(value = "/{idProjet}/addtaskflow")
     @PostMapping(value = "/addtaskflow/{idProjet}")
     @ResponseBody
     public Collection<TaskFlow> addTaskFlow(@PathVariable Long idProjet, @RequestBody TaskFlow taskFlow) {
@@ -82,11 +81,38 @@ public class ProjetController {
        return projet.getTaskFlows() ;
     }
 
+
+
+
     @PostMapping(value = "/add")
     @ResponseBody
-    public Projet addProject(@RequestBody Projet projet) {
-        return projetRepository.save(projet);
+    public Collection<Projet> addProject(@RequestBody Projet projet , @CurrentUser UserPrincipal userPrincipal) {
+        //return projetRepository.save(projet);
+
+        User user = getCurrentUser(userPrincipal);
+
+        Collection<Service> allServices = (Collection<Service>) serviceRepository.findAll();
+        long id = -1;
+
+        for (Service s : allServices
+        ) {
+            if (s.getEmployee().contains(user)) {
+                id = s.getId();
+            }
+        }
+        //System.out.println("Le id est " + id);
+        if (id >= 0) {
+            Service s = serviceRepository.findById(id).get();
+            projetRepository.save(projet);
+            s.addProject(projet);
+            serviceRepository.save(s);
+            return serviceRepository.findById(id).get().getProjets();
+
+        } else {
+            return null;
+        }
     }
+
 
     @GetMapping(value = "/{idProjet}/allvalidation")
     @ResponseBody
@@ -102,13 +128,33 @@ public class ProjetController {
         return projet.getTaskFlows();
     }
 
+    @GetMapping(value = "/{idProjet}/approuved")
+    @ResponseBody
+    public Collection<Projet> approuved(@PathVariable Long idProjet) {
+        Projet projet = projetRepository.findById(idProjet).get();
+        projet.setApprouved(true);
+        projetRepository.save(projet);
+        return (Collection<Projet>) projetRepository.findAll();
+    }
+
+    @GetMapping(value = "/{idProjet}/desapprouved")
+    @ResponseBody
+    public Collection<Projet> desapprouved(@PathVariable Long idProjet) {
+        Projet projet = projetRepository.findById(idProjet).get();
+        projet.setApprouved(false);
+        projetRepository.save(projet);
+        return (Collection<Projet>) projetRepository.findAll();
+    }
+
+
+
+
     @PostMapping("/{idProjet}/validateproject")
     @ResponseBody
     public Collection<ValidateProjectEmp> setNewValidation(@PathVariable Long idProjet, @CurrentUser UserPrincipal userPrincipal ,@RequestBody ValidateProjectEmp validateProjectEmp) {
         User user = getCurrentUser(userPrincipal);
         Projet projet = projetRepository.findById(idProjet).get() ;
         boolean find = false ;
-
         for (ValidateProjectEmp tmp  : projet.getValidations()
              ) {
             if(tmp.getEmployee().getId().equals(userPrincipal.getId()))
@@ -116,7 +162,6 @@ public class ProjetController {
                 find = true ;
             }
         }
-
         if(!find) {
             validateProjectEmp.setEmployee(user);
             validateProjectEmpRepository.save(validateProjectEmp);

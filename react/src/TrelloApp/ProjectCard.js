@@ -39,7 +39,7 @@ const ProjectCard = (props) => {
                 <Typography gutterBottom>
                 <h4>Qui ont voté  : </h4>
                 {
-                     props.emps.validations.map(
+                    props.emps.validations.map(
                         validation => 
                         <div>
                             <Avatar>

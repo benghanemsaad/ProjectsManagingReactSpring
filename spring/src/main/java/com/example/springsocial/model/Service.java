@@ -42,6 +42,9 @@ public class Service {
         this.chefService = chefService;
     }
 
+    public void deleteChef(){
+        this.chefService = null;
+    }
     public long getId() {
         return id;
     }
@@ -64,6 +67,18 @@ public class Service {
 
     public void setEmployee(Collection<User> employee) {
         this.employee = employee;
+    }
+
+    public void addEmployee(User employee){
+        this.employee.add(employee) ;
+    }
+
+    public  void addProject(Projet projet){
+        this.projets.add(projet);
+    }
+
+    public void deleteEmployee(User employee){
+        this.employee.remove(employee);
     }
 
     public User getChefService() {

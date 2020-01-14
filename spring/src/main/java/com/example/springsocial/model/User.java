@@ -35,7 +35,6 @@ public class User {
 
     private String providerId;
 
-
     private String role ;
 
     public String getRole() {

@@ -3,10 +3,13 @@ import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getAllUsers } from "../../util/APIUtils";
 import { addUser } from "../../util/APIUtils";
+
+import { updateUser } from "../../util/APIUtils";
 import Alert from 'react-s-alert';
 
 import { Modal, ModalHeader, ModalBody , ModalFooter} from "reactstrap";
 import AddUserForm from './AddUserForm';
+import UpdateUserForm from './UpdateUserForm';
 
 
 class UserList extends Component {
@@ -14,14 +17,22 @@ class UserList extends Component {
     constructor(props) {
         super(props);
         this.state = {users: [],
-        modal : false
+        modal : false,
+        modalUpdate : false ,
+        updateUserId : ""
     };
 
     this.toggle = this.toggle.bind(this);
     }
 
     toggle() {
-        this.setState({modal: !this.state.modal});
+        this.setState({
+        modal: !this.state.modal
+    });
+    }
+
+    modalUpdateFct= () =>{
+        this.setState({modalUpdate : !this.state.modalUpdate})
     }
 
     componentDidMount() {
@@ -51,6 +62,20 @@ class UserList extends Component {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
         })   
     }
+
+
+    updateUserReact = (user , idUser) => {
+        updateUser(user,idUser)
+        .then(response => {
+                Alert.success("User Modifié");
+                this.setState({
+                    users : response
+                })
+            }
+        ).catch(error => {
+            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+        })   
+    }
     
     render() {
         
@@ -66,7 +91,7 @@ class UserList extends Component {
                                 {this.props.other}
                             </ModalHeader>
                             <ModalBody className="bg-light">
-                                <AddUserForm addUser = {this.addUserReact } close = {this.toggle } />
+                                <AddUserForm addUser = {this.addUserReact} close = {this.toggle } />
                             </ModalBody>
                             <ModalFooter>
                                 <Button onClick={this.toggle}>Cancel</Button>
@@ -88,17 +113,32 @@ class UserList extends Component {
                                     <tr key={user.id}>
                                         <td style={{whiteSpace: 'nowrap'}}>{user.name}</td>
                                         <td>{user.email}</td>
-
                                         <td>
                                             <ButtonGroup>
-                                                <Button size="sm" color="primary" >Edit</Button>
-                                                <Button size="sm" color="danger" onClick={() => this.remove(user.id)}>Delete</Button>
+                                                <Button size="sm" color="primary" onClick={() => {
+                                                    this.setState({updateUserId : user.id ,
+                                                    modalUpdate : true})
+                                                    }}>Edit</Button>
+                                               
                                             </ButtonGroup>
                                         </td>
                                     </tr>  
                             )
                         }
                         </tbody>
+                        <Modal isOpen={this.state.modalUpdate} fade={false}
+                             >
+                            <ModalHeader className="mx-auto modal-header">
+                                Editer Utilisateur
+                                {this.props.other}
+                            </ModalHeader>
+                            <ModalBody className="bg-light">
+                                <UpdateUserForm updateUser = {this.updateUserReact } close = {this.modalUpdateFct } userId = {this.state.updateUserId}/>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={this.modalUpdateFct}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
                     </Table>
                 </Container>
             </div>

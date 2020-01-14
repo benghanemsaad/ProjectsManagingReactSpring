@@ -24,6 +24,12 @@
 	```bash
 	mysql> create database spring_social
 	```
++ **Or Import Our database**
+
+	```
+	In Same Folder U Will Find "spring_social.sql"
+	```
+
 
 + **Configure database username and password**
 
